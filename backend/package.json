@@ -1,13 +1,13 @@
 {
-  "name": "docker",
+  "name": "lodgenow-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend server with Express and MongoDB",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/app.ts",
     "lint": "eslint . --fix"
   },
-  "keywords": [],
+  "keywords": ["express", "typescript", "mongodb"],
   "author": "firdausthedev",
   "license": "ISC",
   "dependencies": {
