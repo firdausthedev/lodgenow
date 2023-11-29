@@ -8,6 +8,17 @@ services:
       - /app/node_modules
     depends_on:
       - mongo
+  frontend:
+    build: ./frontend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
   mongo:
     image: mongo
     restart: always
