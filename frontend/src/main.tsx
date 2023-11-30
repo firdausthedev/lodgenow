@@ -10,6 +10,6 @@ if (!root) {
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <h1>Hello world</h1>
+    <h1>Hellsdsdsddsdo world</h1>
   </React.StrictMode>,
 );
