@@ -10,6 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model HelloWorld {
-  id        String   @id @default(uuid())
+model Property {
+  id        String @id @default(uuid())
+  name      String
+  location  String
+  price     Float
+  bedrooms  Int
+  bathrooms Int
+
+  agent    Agent     @relation(fields: [agentId], references: [id])
+  agentId  String
+  reviews  Review[]
+  bookings Booking[]
+}
+
+model Agent {
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  properties Property[]
+}
+
+model User {
+  id       String    @id @default(uuid())
+  username String    @unique
+  password String
+  bookings Booking[]
+  Review   Review[]
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  rating     Int
+  comment    String?
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+}
+
+model Booking {
+  id         String   @id @default(uuid())
+  checkIn    DateTime
+  checkOut   DateTime
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  payment    Payment?
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  amount    Float
+  status    PaymentStatus
+  booking   Booking       @relation(fields: [bookingId], references: [id])
+  bookingId String        @unique
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }
