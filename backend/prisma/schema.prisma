@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Property {
-  id        String @id @default(uuid())
+  id        String       @id @default(uuid())
   name      String
   location  String
   price     Float
   bedrooms  Int
   bathrooms Int
+  photos    String[]
+  type      PropertyType
 
   agent    Agent     @relation(fields: [agentId], references: [id])
   agentId  String
@@ -24,10 +26,18 @@ model Property {
   bookings Booking[]
 }
 
+enum PropertyType {
+  CITY
+  RURAL
+  MOUNTAIN
+  TROPICAL
+}
+
 model Agent {
   id         String     @id @default(uuid())
   name       String
   email      String     @unique
+  photo      String
   properties Property[]
 }
 
@@ -72,4 +82,10 @@ enum PaymentStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
 }

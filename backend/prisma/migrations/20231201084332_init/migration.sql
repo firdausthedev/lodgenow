@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "PropertyType" AS ENUM ('CITY', 'RURAL', 'MOUNTAIN', 'TROPICAL');
+
+-- CreateEnum
 CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'COMPLETED', 'FAILED');
 
 -- CreateTable
@@ -9,6 +12,8 @@ CREATE TABLE "Property" (
     "price" DOUBLE PRECISION NOT NULL,
     "bedrooms" INTEGER NOT NULL,
     "bathrooms" INTEGER NOT NULL,
+    "photos" TEXT[],
+    "type" "PropertyType" NOT NULL,
     "agentId" TEXT NOT NULL,
 
     CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
@@ -19,6 +24,7 @@ CREATE TABLE "Agent" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "photo" TEXT NOT NULL,
 
     CONSTRAINT "Agent_pkey" PRIMARY KEY ("id")
 );
@@ -64,6 +70,15 @@ CREATE TABLE "Payment" (
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Admin" (
+    "id" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Agent_email_key" ON "Agent"("email");
 
@@ -72,6 +87,9 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Payment_bookingId_key" ON "Payment"("bookingId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admin_username_key" ON "Admin"("username");
 
 -- AddForeignKey
 ALTER TABLE "Property" ADD CONSTRAINT "Property_agentId_fkey" FOREIGN KEY ("agentId") REFERENCES "Agent"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
