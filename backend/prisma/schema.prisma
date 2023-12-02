@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,18 +16,10 @@ model Property {
   bathrooms Int
   photos    String[]
   type      PropertyType
-
-  agent    Agent     @relation(fields: [agentId], references: [id])
-  agentId  String
-  reviews  Review[]
-  bookings Booking[]
-}
-
-enum PropertyType {
-  CITY
-  RURAL
-  MOUNTAIN
-  TROPICAL
+  agentId   String
+  bookings  Booking[]
+  agent     Agent        @relation(fields: [agentId], references: [id])
+  reviews   Review[]
 }
 
 model Agent {
@@ -53,20 +42,20 @@ model Review {
   id         String   @id @default(uuid())
   rating     Int
   comment    String?
-  property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
-  user       User     @relation(fields: [userId], references: [id])
   userId     String
+  property   Property @relation(fields: [propertyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Booking {
   id         String   @id @default(uuid())
   checkIn    DateTime
   checkOut   DateTime
-  property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
-  user       User     @relation(fields: [userId], references: [id])
   userId     String
+  property   Property @relation(fields: [propertyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
   payment    Payment?
 }
 
@@ -74,18 +63,25 @@ model Payment {
   id        String        @id @default(uuid())
   amount    Float
   status    PaymentStatus
-  booking   Booking       @relation(fields: [bookingId], references: [id])
   bookingId String        @unique
-}
-
-enum PaymentStatus {
-  PENDING
-  COMPLETED
-  FAILED
+  booking   Booking       @relation(fields: [bookingId], references: [id])
 }
 
 model Admin {
   id       String @id @default(uuid())
   username String @unique
   password String
+}
+
+enum PropertyType {
+  CITY
+  RURAL
+  MOUNTAIN
+  TROPICAL
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }
