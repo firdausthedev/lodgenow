@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import userRouter from "./routes/user";
+import { errorHandler } from "./middlewares/errors";
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello world!");
 });
 app.use("/api/user", userRouter);
+app.use(errorHandler);
 
 export default app;
