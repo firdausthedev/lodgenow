@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "lint": "eslint . --fix",
-    "test": "STAGE=testing jest"
+    "test": "STAGE=testing jest",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js"
   },
   "keywords": [
     "express",
