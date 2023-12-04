@@ -9,7 +9,7 @@
     "test": "STAGE=testing jest",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
-    "seed": "ts-node --transpile-only prisma/seed/agentSeed.ts && ts-node --transpile-only prisma/seed/propertySeed.ts"
+    "seed": "ts-node --transpile-only prisma/seed/agentSeed.ts && ts-node --transpile-only prisma/seed/propertySeed.ts && ts-node --transpile-only prisma/seed/userSeed.ts"
   },
   "keywords": [
     "express",

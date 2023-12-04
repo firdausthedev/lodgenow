@@ -20,6 +20,7 @@ const defaultConfig = {
   jwtSecret: process.env.JWT_SECRET,
   port: process.env.PORT,
   logging: false,
+  user_default_password: "Password_1",
 };
 
 export default merge(defaultConfig, envConfig);
