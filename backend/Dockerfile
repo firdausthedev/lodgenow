@@ -23,5 +23,5 @@ COPY . .
 EXPOSE 3000
 EXPOSE 5555
 
-CMD ["sh", "-c", "./wait-for-postgres.sh postgres && npx prisma migrate dev && npm start"]
+CMD ["sh", "-c", "./wait-for-postgres.sh postgres && npx prisma migrate dev && npm run dev"]
 

@@ -4,11 +4,15 @@ import cors from "cors";
 
 import userRouter from "./routes/user";
 import { errorHandler } from "./middlewares/errors";
+import config from "./config";
 
 const app = express();
 
 app.use(cors());
-app.use(morgan("dev"));
+
+if (config.logging) {
+  app.use(morgan("dev"));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,7 +24,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello world!");
+  res.json({ message: "hello" });
 });
 app.use("/api/user", userRouter);
 app.use(errorHandler);
