@@ -39,10 +39,4 @@ const main = async () => {
   });
 };
 
-main()
-  .catch(error => {
-    throw error;
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+export default main;
