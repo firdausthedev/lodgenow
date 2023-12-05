@@ -3,6 +3,10 @@ import morgan from "morgan";
 import cors from "cors";
 
 import userRouter from "./routes/user";
+import agentRouter from "./routes/agent";
+import propertyRouter from "./routes/property";
+import reviewRouter from "./routes/review";
+
 import { errorHandler } from "./middlewares/errors";
 import config from "./config";
 
@@ -27,6 +31,10 @@ app.get("/", (req: Request, res: Response) => {
   res.json({ message: "hello" });
 });
 app.use("/api/user", userRouter);
+app.use("/api/agent", agentRouter);
+app.use("/api/property", propertyRouter);
+app.use("/api/review", reviewRouter);
+
 app.use(errorHandler);
 
 export default app;
