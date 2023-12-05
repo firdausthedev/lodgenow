@@ -44,6 +44,7 @@ model Review {
   comment    String?
   propertyId String
   userId     String
+  createdAt  DateTime @default(now())
   property   Property @relation(fields: [propertyId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
 }

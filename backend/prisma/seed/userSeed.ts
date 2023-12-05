@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "./../../src/utils/auth";
 
-import config from "../../src/config";
 const prisma = new PrismaClient();
 
 const main = async () => {
@@ -9,13 +8,13 @@ const main = async () => {
     data: [
       {
         id: "vb23fb9c-22a2-461b-af72-c72a7a67b21d",
-        username: "username_1",
-        password: await hashPassword(config.user_default_password),
+        username: "mary_ann",
+        password: await hashPassword(process.env.USER_DEFAULT_PASSWORD!),
       },
       {
         id: "lb23fb9c-22a2-461b-af72-c72a7a67b21d",
-        username: "username_2",
-        password: await hashPassword(config.user_default_password),
+        username: "jerry_smith",
+        password: await hashPassword(process.env.USER_DEFAULT_PASSWORD!),
       },
     ],
   });
