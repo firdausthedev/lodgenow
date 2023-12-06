@@ -17,7 +17,7 @@ export const createUser = async (
       },
     });
 
-    const token = createJWT(user);
+    const token = createJWT(user, "user");
     res.json({ token, success: true });
   } catch (error) {
     next(error);
@@ -53,7 +53,7 @@ export const signin = async (
       });
       return;
     }
-    const token = createJWT(user!);
+    const token = createJWT(user!, "user");
     res.json({ token, success: true });
   } catch (error) {
     next(error);
