@@ -13,6 +13,7 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
+  console.log(err);
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     if (err.code === "P2002") {
       return res
@@ -21,6 +22,8 @@ export const errorHandler = (
           success: false,
         })
         .status(401);
+    } else {
+      return res.json({ message: err.meta, success: false }).status(401);
     }
   } else {
     // uncaught errors

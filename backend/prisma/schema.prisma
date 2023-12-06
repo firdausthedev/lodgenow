@@ -43,10 +43,12 @@ model Review {
   rating     Int
   comment    String?
   propertyId String
-  userId     String
+  userId     String   
   createdAt  DateTime @default(now())
   property   Property @relation(fields: [propertyId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([propertyId, userId]) 
 }
 
 model Booking {
