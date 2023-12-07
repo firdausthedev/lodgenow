@@ -42,6 +42,34 @@ export const createReview = async (
   next: NextFunction,
 ) => {
   try {
+    const booking = await prisma.booking.findFirst({
+      where: {
+        propertyId: req.body.propertyId,
+        userId: req.user!.id,
+      },
+    });
+
+    if (!booking) {
+      return res.status(400).json({
+        message: "Booking does not exist",
+        success: false,
+      });
+    }
+
+    const payment = await prisma.payment.findFirst({
+      where: {
+        bookingId: booking.id,
+        status: "COMPLETED",
+      },
+    });
+
+    if (!payment) {
+      return res.status(400).json({
+        message: "Payment is not completed",
+        success: false,
+      });
+    }
+
     const review = await prisma.review.create({
       data: {
         rating: req.body.rating,
