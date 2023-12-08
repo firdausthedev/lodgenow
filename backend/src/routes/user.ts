@@ -65,7 +65,7 @@ router.put(
     body("new_password")
       .optional()
       .isString()
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&_]{6,32}$/)
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&_]{6,255}$/)
       .withMessage(
         `Please enter a password at least 6 character and contain At least one uppercase. At least one lower case.
        At least one number. At least one special character.`,
