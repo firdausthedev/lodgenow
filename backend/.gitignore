@@ -33,3 +33,4 @@ npm-debug.log
 
 src/config/prod.ts
 dist
+readme.md 

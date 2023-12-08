@@ -1,14 +1,5 @@
 import { Router } from "express";
-import { handleInputErrors } from "../middlewares/handleInputsErrors";
-import {
-  createAgent,
-  deleteAgent,
-  getAllAgents,
-  getOneAgent,
-  updateAgent,
-} from "../handlers/agent";
-import { body, checkExact } from "express-validator";
-import { protectedAdmin } from "../utils/auth";
+import { getAllAgents, getOneAgent } from "../handlers/agent";
 
 const router = Router();
 
@@ -25,44 +16,5 @@ router.get("/", getAllAgents);
  * @access  Public
  */
 router.get("/:id", getOneAgent);
-
-/**
- * @feature admin create a new agent
- * @route   POST /api/agent/admin
- * @access  Private
- */
-router.post(
-  "/admin",
-  protectedAdmin,
-  body("name").isString(),
-  body("email").isString().isEmail(),
-  body("photo").isString().isURL(),
-  handleInputErrors,
-  createAgent,
-);
-
-/**
- * @feature admin update an agent
- * @route   PUT /api/agent/admin/:id
- * @access  Private
- */
-router.put(
-  "/admin/:id",
-  protectedAdmin,
-  checkExact([
-    body("name").optional().isString(),
-    body("email").optional().isString().isEmail(),
-    body("photo").optional().isString().isURL(),
-  ]),
-  handleInputErrors,
-  updateAgent,
-);
-
-/**
- * @feature admin delete an agent
- * @route   DELETE /api/agent/admin/:id
- * @access  Private
- */
-router.delete("/admin/:id", protectedAdmin, deleteAgent);
 
 export default router;
