@@ -1,12 +1,44 @@
 import { Request, Response, NextFunction } from "express";
 import prisma from "../utils/connectDb";
 
+interface Pagination {
+  next?: {
+    page: number;
+    limit: number;
+  };
+  prev?: {
+    page: number;
+    limit: number;
+  };
+}
+
 export const getAllProperty = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await prisma.property.count();
+
+    const pagination: Pagination = {};
+
+    if (endIndex < total) {
+      pagination.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
     if (req.query.type) {
       const { type } = req.query;
       if (
@@ -19,6 +51,7 @@ export const getAllProperty = async (
           .status(400)
           .json({ message: "Invalid type", success: false });
       }
+
       const propertiesByType = await prisma.property.findMany({
         where: { type: type },
         orderBy: {
@@ -44,14 +77,22 @@ export const getAllProperty = async (
             },
           },
         },
+        skip: startIndex,
+        take: limit,
       });
-      return res.json({ data: propertiesByType, success: true });
+      res.json({
+        pagination,
+        count: propertiesByType.length,
+        data: propertiesByType,
+        success: true,
+      });
     } else {
       const properties = await prisma.property.findMany({
         orderBy: {
           type: "asc",
         },
         select: {
+          _count: true,
           id: true,
           name: true,
           location: true,
@@ -71,8 +112,15 @@ export const getAllProperty = async (
             },
           },
         },
+        skip: startIndex,
+        take: limit,
       });
-      res.json({ data: properties, success: true });
+      res.json({
+        pagination,
+        count: properties.length,
+        data: properties,
+        success: true,
+      });
     }
   } catch (error) {
     next(error);
