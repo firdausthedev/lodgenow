@@ -32,7 +32,11 @@ export const getOneAgent = async (
         id: req.params.id,
       },
       include: {
-        properties: true,
+        properties: {
+          include: {
+            reviews: true,
+          },
+        },
       },
     });
     res.json({ data: agent, success: true });
