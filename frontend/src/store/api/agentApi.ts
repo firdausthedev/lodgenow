@@ -4,8 +4,6 @@ import { Agent } from "./../types";
 export interface getAgentResponse {
   success: boolean;
   data: Agent;
-  averageRating: number;
-  totalReviews: number;
 }
 
 const agentApi = baseApi.injectEndpoints({

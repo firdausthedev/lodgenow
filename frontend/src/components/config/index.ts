@@ -1,19 +1,16 @@
 import merge from "lodash.merge";
+import localConfig from "./local";
+import testingConfig from "./local";
 
 const stage = import.meta.env.VITE_STAGE || "local";
 let envConfig;
 
-const importConfig = async (configPath: string) => {
-  const module = await import(configPath);
-  return module.default;
-};
-
 if (stage === "prod") {
-  envConfig = await importConfig("./prod");
+  envConfig = testingConfig;
 } else if (stage === "testing") {
-  envConfig = await importConfig("./testing");
+  envConfig = testingConfig;
 } else {
-  envConfig = await importConfig("./local");
+  envConfig = localConfig;
 }
 
 const defaultConfig = {

@@ -31,7 +31,7 @@ const AgentProfileCard = ({ data }: dataProps) => {
         <div className="flex flex-col gap-1">
           <div>
             <p className="font-bold text-lg font-primary leading-none break-words">
-              {data.totalReviews}
+              {data.data.totalReviews}
             </p>
             <p className="font-secondary text-[0.55rem] -mt-1">Reviews</p>
           </div>
@@ -41,7 +41,7 @@ const AgentProfileCard = ({ data }: dataProps) => {
           <div>
             <div className="flex items-center gap-1">
               <p className="font-bold text-lg font-primary leading-none mt-2 break-words">
-                {data.averageRating}
+                {data.data.averageRating}
               </p>
               <FaStar className="text-xs" />
             </div>
@@ -67,7 +67,7 @@ const AgentContactDetail = ({ data }: dataProps) => {
 const AgentListings = ({ data }: dataProps) => {
   const maxPropertiesToShow = 2;
   const numberOfProperties = data.data.properties.length;
-
+  console.log(data);
   return (
     <div>
       <h2 className="font-primary text-base">
@@ -93,7 +93,7 @@ const AgentListings = ({ data }: dataProps) => {
                 <div className="flex gap-1">
                   <FaStar className="text-[0.5rem] mt-[2px]" />
                   <p className="font-light text-xs font-secondary leading-none  break-words">
-                    {data.averageRating}
+                    {property.averageRating}
                   </p>
                 </div>
               </div>
@@ -109,7 +109,6 @@ const AgentListings = ({ data }: dataProps) => {
 
 const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
   const { isLoading, error, data } = useGetAgentQuery(agentId);
-
   if (isLoading || !data) {
     return createPortal(
       <div

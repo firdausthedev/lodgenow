@@ -3,6 +3,8 @@ export interface Agent {
   name: string;
   email: string;
   photo: string;
+  averageRating: number;
+  totalReviews: number;
   properties: Property[];
 }
 
@@ -63,6 +65,8 @@ export interface Property {
   bookings: Booking[];
   agent: Agent;
   reviews: Review[];
+  totalReviews: number;
+  averageRating: number;
 }
 
 export enum PaymentStatus {

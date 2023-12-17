@@ -80,10 +80,26 @@ export const getAllProperty = async (
         skip: startIndex,
         take: limit,
       });
+
+      const propertiesWithAggregate = propertiesByType.map(property => {
+        const totalReviews = property.reviews.length;
+        const averageRating =
+          totalReviews > 0
+            ? property.reviews.reduce((sum, review) => sum + review.rating, 0) /
+              totalReviews
+            : 0;
+
+        return {
+          ...property,
+          totalReviews,
+          averageRating,
+        };
+      });
+
       res.json({
         pagination,
         count: propertiesByType.length,
-        data: propertiesByType,
+        data: propertiesWithAggregate,
         success: true,
       });
     } else {
@@ -115,10 +131,26 @@ export const getAllProperty = async (
         skip: startIndex,
         take: limit,
       });
+
+      const propertiesWithAggregate = properties.map(property => {
+        const totalReviews = property.reviews.length;
+        const averageRating =
+          totalReviews > 0
+            ? property.reviews.reduce((sum, review) => sum + review.rating, 0) /
+              totalReviews
+            : 0;
+
+        return {
+          ...property,
+          totalReviews,
+          averageRating,
+        };
+      });
+
       res.json({
         pagination,
         count: properties.length,
-        data: properties,
+        data: propertiesWithAggregate,
         success: true,
       });
     }
