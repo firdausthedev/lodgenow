@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaXmark, FaStar, FaCheck, FaEnvelope } from "react-icons/fa6";
 
+import { useGetAgentQuery } from "../../store/api/agentApi";
+
 import config from "../config";
 
 import { Agent } from "./../../store/types";
@@ -12,24 +14,19 @@ interface AgentModalProps {
 }
 
 interface AgentProfileCardProps {
-  agent: Agent;
+  agent: Agent | undefined;
   numberOfReviews: number;
   averageRating: number;
 }
 
-interface AgentResponse {
-  success: boolean;
-  data: Agent;
-}
+export const calculateAverageRating = (ratings: number[]): number => {
+  const numberOfReviews = ratings.length;
 
-const calculateAverageRating = (ratings: number[]): number => {
-  if (ratings.length === 0) {
+  if (numberOfReviews === 0) {
     return 0;
   }
 
   const sumOfRatings = ratings.reduce((total, rating) => total + rating, 0);
-  const numberOfReviews = ratings.length;
-
   const averageRating = sumOfRatings / numberOfReviews;
 
   return Number(averageRating.toFixed(3));
@@ -40,6 +37,9 @@ const AgentProfileCard = ({
   numberOfReviews,
   averageRating,
 }: AgentProfileCardProps) => {
+  if (!agent) {
+    return null;
+  }
   return (
     <div className="w-full bg-white  rounded-lg shadow-lg p-4 flex">
       <div className="w-full flex justify-center items-center flex-col gap-1">
@@ -79,7 +79,10 @@ const AgentProfileCard = ({
   );
 };
 
-const AgentContactDetail = ({ agent }: { agent: Agent }) => {
+const AgentContactDetail = ({ agent }: { agent: Agent | undefined }) => {
+  if (!agent) {
+    return null;
+  }
   return (
     <div className="flex gap-2 items-center text-gray-900 text-xs">
       <FaEnvelope />
@@ -91,6 +94,9 @@ const AgentContactDetail = ({ agent }: { agent: Agent }) => {
 };
 
 const AgentListings = ({ agent, averageRating }: AgentProfileCardProps) => {
+  if (!agent) {
+    return null;
+  }
   const maxPropertiesToShow = 2;
   const numberOfProperties = agent.properties.length;
 
@@ -132,33 +138,65 @@ const AgentListings = ({ agent, averageRating }: AgentProfileCardProps) => {
 };
 
 const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
-  const [agent, setAgent] = useState<Agent | undefined>(undefined);
+  const { isLoading, error, data: agent } = useGetAgentQuery(agentId);
   const [averageRating, setAverageRating] = useState<number>(0);
   const [numberOfReviews, setNumberOfReviews] = useState<number>(0);
   useEffect(() => {
     const fetchAgent = async () => {
-      const data = await fetch(`${config.backendurl}/api/agent/${agentId}`);
-      const res: AgentResponse = await data.json();
-
-      const totalRatings: number[] = [];
-      if (res.data.properties) {
-        res.data.properties.forEach(property => {
-          property.reviews.forEach(review => {
-            totalRatings.push(review.rating);
-          });
-        });
+      if (!agent) {
+        return;
       }
-
+      const totalRatings = agent.properties.flatMap(property =>
+        property.reviews.map(review => review.rating),
+      );
       setAverageRating(calculateAverageRating(totalRatings));
       setNumberOfReviews(totalRatings.length);
-
-      setAgent(res.data);
     };
     fetchAgent();
-  }, [agentId]);
+  }, [agent]);
 
-  if (!agent) {
-    return null;
+  if (isLoading) {
+    return createPortal(
+      <div
+        aria-label="modal"
+        className="fixed left-0 right-0 top-0 bottom-0 h-full w-full bg-black/40 flex justify-center items-center shadow-md">
+        <div
+          aria-label="modal-content"
+          className="bg-brown-200 flex flex-col rounded-xl w-[16rem] h-3/4 p-4 gap-3">
+          <div className="h-32 w-full animate-pulse mx-auto bg-slate-400 rounded-lg"></div>
+          <div className="h-20 w-1/2 animate-pulse  bg-slate-400 rounded-lg "></div>
+          <div className="h-4 w-1/4 animate-pulse  bg-slate-400 rounded-lg "></div>
+          <div className="h-20 w-1/2 animate-pulse  bg-slate-400 rounded-lg "></div>
+          <div className="h-4 w-1/4 animate-pulse  bg-slate-400 rounded-lg "></div>
+        </div>
+      </div>,
+      document.getElementById("modal") as HTMLElement,
+    );
+  }
+
+  if (error) {
+    return createPortal(
+      <div
+        aria-label="modal"
+        className="fixed left-0 right-0 top-0 bottom-0 h-full w-full bg-black/40 flex justify-center items-center shadow-md">
+        <div
+          aria-label="modal-content"
+          className="bg-brown-200 flex flex-col rounded-xl w-[16rem] h-3/4 p-4 gap-3">
+          <button
+            aria-label="close-modal"
+            className="flex w-fit hover:bg-white/70 rounded-full p-1 transition-colors ease-in-out duration-200"
+            onClick={() => setIsModal(false)}>
+            <FaXmark aria-hidden="true" className="text-black text-sm" />
+          </button>
+          <div>
+            <p className="font-secondary text-base">
+              Error fetching agent. Please try again later.
+            </p>
+          </div>
+        </div>
+      </div>,
+      document.getElementById("modal") as HTMLElement,
+    );
   }
 
   return createPortal(

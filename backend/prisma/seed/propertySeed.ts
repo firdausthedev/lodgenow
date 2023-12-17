@@ -88,7 +88,7 @@ const main = async () => {
         type: "RURAL",
         price: 100.0,
         photos: [
-          "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14a",
+          "https://images.unsplash.com/photo-1572120360610-d971b9d7767c",
           "https://images.unsplash.com/photo-1585128792103-0b591f96512e",
         ],
         agentId: "ff2f0c0f-750d-460e-bb7e-4ebec8135380",
