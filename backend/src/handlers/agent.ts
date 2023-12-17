@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import prisma from "../utils/connectDb";
+import { calculateAverageRating } from "../utils/reviews";
 
 export const getAllAgents = async (
   req: Request,
@@ -39,7 +40,25 @@ export const getOneAgent = async (
         },
       },
     });
-    res.json({ data: agent, success: true });
+
+    if (!agent) {
+      return res.status(404).json({
+        message: "Invalid agentId",
+        success: false,
+      });
+    }
+    const totalRatings = agent.properties.flatMap(property =>
+      property.reviews.map(review => review.rating),
+    );
+
+    const avgRating = calculateAverageRating(totalRatings);
+
+    res.json({
+      data: agent,
+      success: true,
+      averageRating: avgRating,
+      totalReviews: totalRatings.length,
+    });
   } catch (error) {
     next(error);
   }

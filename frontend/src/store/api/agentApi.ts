@@ -1,16 +1,18 @@
 import { baseApi } from "./baseApi";
 import { Agent } from "./../types";
 
-interface AgentResponse {
+export interface getAgentResponse {
   success: boolean;
   data: Agent;
+  averageRating: number;
+  totalReviews: number;
 }
 
 const agentApi = baseApi.injectEndpoints({
   endpoints: build => ({
     getAgent: build.query({
       query: id => ({ url: `agent/${id}`, method: "GET" }),
-      transformResponse: (response: AgentResponse) => response.data,
+      transformResponse: (response: getAgentResponse) => response,
     }),
   }),
   overrideExisting: false,
