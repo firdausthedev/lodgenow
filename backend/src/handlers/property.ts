@@ -22,22 +22,7 @@ export const getAllProperty = async (
     const limit = parseInt(req.query.limit as string, 10) || 5;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const total = await prisma.property.count();
-
     const pagination: Pagination = {};
-
-    if (endIndex < total) {
-      pagination.next = {
-        page: page + 1,
-        limit: limit,
-      };
-    }
-    if (startIndex > 0) {
-      pagination.prev = {
-        page: page - 1,
-        limit: limit,
-      };
-    }
 
     if (req.query.type) {
       const { type } = req.query;
@@ -95,6 +80,20 @@ export const getAllProperty = async (
           averageRating,
         };
       });
+      const total = (await prisma.property.findMany({ where: { type } }))
+        .length;
+      if (endIndex < total) {
+        pagination.next = {
+          page: page + 1,
+          limit: limit,
+        };
+      }
+      if (startIndex > 0) {
+        pagination.prev = {
+          page: page - 1,
+          limit: limit,
+        };
+      }
 
       res.json({
         pagination,
@@ -146,6 +145,19 @@ export const getAllProperty = async (
           averageRating,
         };
       });
+      const total = await prisma.property.count();
+      if (endIndex < total) {
+        pagination.next = {
+          page: page + 1,
+          limit: limit,
+        };
+      }
+      if (startIndex > 0) {
+        pagination.prev = {
+          page: page - 1,
+          limit: limit,
+        };
+      }
 
       res.json({
         pagination,

@@ -19,11 +19,14 @@ export interface getAllPropertyResponse {
 
 const propertyApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getAllProperty: build.query<getAllPropertyResponse, [number, number]>({
-      query: (args: [number, number]) => {
-        const [limit, page] = args;
+    getAllProperty: build.query<
+      getAllPropertyResponse,
+      [number, number, string]
+    >({
+      query: (args: [number, number, string]) => {
+        const [limit, page, type] = args;
         return {
-          url: `property?limit=${limit}&page=${page}`,
+          url: `property?limit=${limit}&page=${page}${type && `&type=${type}`}`,
           method: "GET",
         };
       },
@@ -43,7 +46,7 @@ export const filterPropertiesByName = (
 };
 
 export const useSearchProperty = (name: string) => {
-  const { data: allProperties } = useGetAllPropertyQuery([100, 1], {
+  const { data: allProperties } = useGetAllPropertyQuery([100, 1, ""], {
     skip: name === "",
   });
 

@@ -29,7 +29,7 @@ const PropertyList = ({
 
   if (isLoading || !data) {
     return (
-      <div className="w-[800px] h-40 mx-auto m-5">
+      <div className="w-full h-40  m-5">
         <div className="grid grid-cols-3 gap-2">
           <div className="flex flex-col gap-2">
             <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
@@ -64,7 +64,7 @@ const PropertyList = ({
 
   if (isError) {
     return (
-      <div className="w-[800px] h-40 mx-auto m-5">
+      <div className="w-full h-40  m-5">
         <p className="font-secondary text-base">
           Error fetching data. Please try again later.
         </p>
@@ -75,13 +75,13 @@ const PropertyList = ({
   if (searchTerm) {
     if (searchTerm && searchResult.length === 0) {
       return (
-        <div className="w-[800px] h-40 mx-auto m-5">
+        <div className="w-full h-40  m-5">
           <p className="font-secondary text-base">No property found.</p>
         </div>
       );
     } else {
       return (
-        <div className="w-[800px] mx-auto m-5">
+        <div className="w-full m-5">
           <div className="grid grid-cols-3 gap-2">
             {searchResult.map(property => {
               return (
@@ -101,7 +101,7 @@ const PropertyList = ({
 
   if (data)
     return (
-      <div className="w-[800px] mx-auto m-5">
+      <div className="w-full mx-auto m-5">
         <div className="grid grid-cols-3 gap-2">
           {data.data.map(property => {
             return (
