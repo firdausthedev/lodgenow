@@ -33,4 +33,28 @@ const propertyApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
+export const filterPropertiesByName = (
+  properties: Property[],
+  name: string,
+): Property[] => {
+  return properties.filter(property =>
+    property.name.toLowerCase().includes(name.toLowerCase()),
+  );
+};
+
+export const useSearchProperty = (name: string) => {
+  const { data: allProperties } = useGetAllPropertyQuery([100, 1], {
+    skip: name === "",
+  });
+
+  const searchResults = allProperties
+    ? filterPropertiesByName(allProperties.data, name)
+    : [];
+
+  return {
+    result: searchResults,
+    isSuccess: true,
+  };
+};
+
 export const { useGetAllPropertyQuery } = propertyApi;

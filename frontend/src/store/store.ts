@@ -2,8 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
 import agent from "./slices/agentSlice";
 import property from "./slices/propertySlice";
+import search from "./slices/searchSlice";
+
 const store = configureStore({
   reducer: {
+    search,
     agent,
     property,
     [baseApi.reducerPath]: baseApi.reducer,
