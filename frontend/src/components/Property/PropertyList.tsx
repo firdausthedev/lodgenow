@@ -32,30 +32,30 @@ const PropertyList = ({
       <div className="w-full h-40">
         <div className="grid grid-cols-3 gap-2">
           <div className="flex flex-col gap-2">
-            <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/2 "></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/5 "></div>
+            <div className="h-56 bg-loadingGray animate-pulse rounded-lg"></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
           </div>
 
           <div className="flex flex-col gap-2">
-            <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/2 "></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/5 "></div>
+            <div className="h-56 bg-loadingGray animate-pulse rounded-lg"></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/2 "></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/5 "></div>
+            <div className="h-56 bg-loadingGray animate-pulse rounded-lg"></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/2 "></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/5 "></div>
+            <div className="h-56 bg-loadingGray animate-pulse rounded-lg"></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="h-56 bg-slate-600 animate-pulse rounded-lg"></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/2 "></div>
-            <div className="h-3 bg-slate-600 animate-pulse rounded-md w-1/5 "></div>
+            <div className="h-56 bg-loadingGray animate-pulse rounded-lg"></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+            <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
           </div>
         </div>
       </div>

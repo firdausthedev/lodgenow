@@ -25,14 +25,14 @@ const Pagination = ({ pagination, onPageChange }: PaginationProps) => {
     <div className="flex gap-2 mt-2 justify-end">
       {pagination.prev && (
         <button
-          className="font-secondary text-[0.5rem] border border-black rounded-md text-black py-1 px-2"
+          className="font-secondary text-base border border-black rounded-md text-black py-1 px-3"
           onClick={() => handlePageChange(pagination.prev?.page)}>
           Previous
         </button>
       )}
       {pagination.next && (
         <button
-          className="font-secondary text-[0.5rem] bg-black rounded-md text-white py-1 px-2"
+          className="font-secondary text-base bg-black rounded-md text-white py-1 px-3"
           onClick={() => handlePageChange(pagination.next?.page)}>
           Next
         </button>

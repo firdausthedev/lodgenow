@@ -20,21 +20,21 @@ const SearchInput = () => {
   return (
     <div className="relative">
       <div className="absolute top-3 left-0 flex items-center pl-2 pointer-events-none">
-        <FaMagnifyingGlass className="text-xs" />
+        <FaMagnifyingGlass className="text-sm" />
       </div>
       <input
         type="search"
         value={searchTerm}
         onChange={handleInputChange}
         autoComplete="off"
-        className="block w-[200px] p-2 pl-6 text-xs font-secondary font-normal text-gray-500  rounded-lg  shadow-md border "
+        className="block w-64 p-2 pl-7 text-sm font-secondary font-normal text-gray-500 rounded-lg shadow-md border "
         placeholder="Search for property"
       />
       {searchTerm && (
         <button
           type="button"
           onClick={handleClearSearch}
-          className="p-2 text-white rounded-lg absolute right-2.5 top-2 px-2 py-1 bg-black font-normal text-[0.5rem] font-secondary outline-none">
+          className="p-2 text-white rounded-lg absolute right-2.5 top-2 px-2 py-1 bg-black font-normal text-xs font-secondary outline-none">
           Clear
         </button>
       )}

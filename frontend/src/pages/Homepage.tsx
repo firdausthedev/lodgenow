@@ -26,7 +26,7 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex max-w-[800px] mx-auto">
+      <div className="flex container mx-auto">
         <SideNav
           type={type}
           setType={setType}

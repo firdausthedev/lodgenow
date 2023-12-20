@@ -12,7 +12,7 @@ type PropertyCardProps = {
 const PropertyCardPhotos = ({ property }: { property: Property }) => {
   return (
     <div
-      className="h-56 w-full shadow-md rounded-lg bg-center bg-cover bg-no-repeat relative"
+      className="h-80 w-full shadow-md rounded-lg bg-center bg-cover bg-no-repeat relative"
       style={{
         backgroundImage: `url('${property.photos[0]}')`,
       }}>
@@ -31,20 +31,20 @@ const PropertyCardDetails = ({
   return (
     <div className="mt-2">
       <div className="flex justify-between mt-2">
-        <p className="font-primary font-bold text-xs leading-none mt-1">
+        <p className="font-primary font-semibold text-lg leading-none mt-1">
           {property.name}
         </p>
         <div className="flex gap-1">
-          <FaStar className="text-[0.5rem] mt-[2px]" />
-          <p className="font-light text-xs font-secondary leading-none break-words">
+          <FaStar className="text-sm " />
+          <p className="font-light text-base font-secondary leading-none break-words">
             {averageRatings} ({totalReviews})
           </p>
         </div>
       </div>
-      <p className="font-secondary font-light text-xs  text-gray-700">
+      <p className="font-secondary font-light text-base  text-gray-700">
         {property.location}
       </p>
-      <p className="font-secondary font-bold text-xs mt-2">
+      <p className="font-secondary font-semibold text-base mt-2">
         ${property.price} <span className="font-normal">night</span>
       </p>
     </div>

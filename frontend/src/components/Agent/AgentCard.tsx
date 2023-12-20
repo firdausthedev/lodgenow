@@ -12,13 +12,13 @@ const AgentCard = ({ agentId, photo }: AgentCardProps) => {
     <>
       <button
         onClick={() => setIsModal(!isModal)}
-        className="h-14 w-12 bg-brown-200 shadow-md 
+        className="h-20 w-16 bg-brown-200 shadow-md 
                  rounded-tr-lg rounded-br-lg rounded-tl-sm rounded-bl-sm
                  flex justify-center items-center cursor-pointer
                  group overflow-hidden  
                  relative">
         <div
-          className="h-7 w-7 shadow-md rounded-full bg-top bg-cover bg-no-repeat
+          className="h-10 w-10 shadow-md rounded-full bg-top bg-cover bg-no-repeat
                     transition-transform transform group-hover:scale-110"
           style={{ backgroundImage: `url('${photo}')` }}
         />
