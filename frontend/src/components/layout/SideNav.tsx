@@ -1,9 +1,14 @@
 import React from "react";
+import { clearSearchTerm } from "../../store/slices/searchSlice";
+import { useDispatch } from "react-redux";
 
 const SideNav = ({ type, setType, setCurrentPage }) => {
+  const dispatch = useDispatch();
+
   const onTypeHandler = type => {
     setType(type);
     setCurrentPage(1);
+    dispatch(clearSearchTerm());
   };
 
   return (
