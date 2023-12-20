@@ -26,7 +26,7 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex container mx-auto">
+      <div className="flex container mx-auto py-5">
         <SideNav
           type={type}
           setType={setType}

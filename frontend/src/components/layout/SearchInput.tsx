@@ -27,8 +27,8 @@ const SearchInput = () => {
         value={searchTerm}
         onChange={handleInputChange}
         autoComplete="off"
-        className="block w-64 p-2 pl-7 text-sm font-secondary font-normal text-gray-500 rounded-lg shadow-md border "
-        placeholder="Search for property"
+        className="block w-64 p-2 pl-7 text-sm font-secondary font-normal text-gray-500 rounded-lg shadow-md border appearance-none"
+        placeholder="Search for property name"
       />
       {searchTerm && (
         <button

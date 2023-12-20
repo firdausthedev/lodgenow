@@ -3,12 +3,14 @@ import { baseApi } from "./api/baseApi";
 import agent from "./slices/agentSlice";
 import property from "./slices/propertySlice";
 import search from "./slices/searchSlice";
+import user from "./slices/userSlice";
 
 const store = configureStore({
   reducer: {
     search,
     agent,
     property,
+    user,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: getDefaultMiddleware =>

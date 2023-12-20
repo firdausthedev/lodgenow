@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container flex justify-between">
         <div className="flex gap-5  items-center">
           <a href="/">
-            <h1 className="font-bold  text-xl">lodgenow</h1>
+            <h1 className="font-bold text-xl font-primary">lodgenow</h1>
           </a>
           <SearchInput />
         </div>
