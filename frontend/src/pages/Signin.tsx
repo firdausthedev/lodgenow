@@ -1,9 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { useFormChange } from "./../components/utils/hook";
-import {
-  postUserSignInResponse,
-  usePostUserSignInQuery,
-} from "../store/api/userApi";
+import { postUserResponse, usePostUserSignInQuery } from "../store/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../store/slices/userSlice";
@@ -26,13 +23,11 @@ const Signin = () => {
   });
 
   const [isFormSubmit, setIsFormSubmit] = useState(false);
-  const username = values.username;
-  const password = values.password;
 
   const { data, error, isLoading, isError, isSuccess } = usePostUserSignInQuery(
     {
-      username,
-      password,
+      username: values.username,
+      password: values.password,
     },
     { skip: isFormSubmit === false },
   );
@@ -45,7 +40,7 @@ const Signin = () => {
   };
 
   useEffect(() => {
-    const handleSuccessLogin = (data: postUserSignInResponse) => {
+    const handleLogin = (data: postUserResponse) => {
       resetValues();
       setErrorMsg("");
       setIsFormSubmit(false);
@@ -54,12 +49,15 @@ const Signin = () => {
     };
 
     if (isError) {
-      setErrorMsg((error as ErrorResponse).data.message);
+      const errorResponse = error as ErrorResponse;
+      setErrorMsg(errorResponse.data.message);
       setIsFormSubmit(false);
     }
 
     if (isSuccess) {
-      handleSuccessLogin(data);
+      if (data.success) {
+        handleLogin(data);
+      }
     }
   }, [
     isError,
@@ -76,13 +74,13 @@ const Signin = () => {
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">
         <a
-          className="text-center font-bold text-xl font-primary inline-block w-full"
+          className="text-center font-bold text-3xl font-primary inline-block w-full"
           href="/">
           lodgenow
         </a>
         <h1 className="text-lg font-primary font-bold">Signin</h1>
         <form onSubmit={handleFormSubmit}>
-          <div className="flex flex-col gap-3 mt-3">
+          <div className="flex flex-col gap-3 mt-1">
             <div>
               <div className="flex justify-between">
                 <label

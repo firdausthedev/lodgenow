@@ -16,22 +16,22 @@ export const errorHandler = (
   console.log(err);
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     if (err.code === "P2002") {
-      return res
-        .json({
-          message: `There is a unique constraint violation on ${err.meta?.target}`,
-          errCode: err.code,
-          success: false,
-        })
-        .status(401);
+      res.status(401);
+      return res.json({
+        message: `There is a unique constraint violation on ${err.meta?.target}`,
+        errCode: err.code,
+        success: false,
+      });
     } else {
-      return res
-        .json({ message: err.meta, errCode: err.code, success: false })
-        .status(401);
+      res.status(404);
+      return res.json({ message: err.meta, errCode: err.code, success: false });
     }
   } else if (err instanceof Prisma.PrismaClientValidationError) {
-    return res.json({ message: "Unknown field", success: false }).status(401);
+    res.status(401);
+    return res.json({ message: "Unknown field", success: false });
   } else {
     // uncaught errors
-    return res.json({ message: "server error", success: false }).status(500);
+    res.status(500);
+    return res.json({ message: "server error", success: false });
   }
 };

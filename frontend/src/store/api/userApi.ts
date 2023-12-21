@@ -1,9 +1,10 @@
 import { baseApi } from "./baseApi";
 
-export interface postUserSignInResponse {
+export interface postUserResponse {
   success: boolean;
   token: string;
-  userId: string;
+  message: string;
+  errCode: string;
 }
 
 const userApi = baseApi.injectEndpoints({
@@ -17,10 +18,21 @@ const userApi = baseApi.injectEndpoints({
           password,
         },
       }),
-      transformResponse: (response: postUserSignInResponse) => response,
+      transformResponse: (response: postUserResponse) => response,
+    }),
+    postUserRegister: build.query({
+      query: ({ username, password }) => ({
+        url: `user`,
+        method: "POST",
+        body: {
+          username,
+          password,
+        },
+      }),
+      transformResponse: (response: postUserResponse) => response,
     }),
   }),
   overrideExisting: false,
 });
 
-export const { usePostUserSignInQuery } = userApi;
+export const { usePostUserSignInQuery, usePostUserRegisterQuery } = userApi;
