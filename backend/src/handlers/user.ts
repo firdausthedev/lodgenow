@@ -42,7 +42,7 @@ export const signin = async (
     if (!user) {
       res.status(404);
       res.json({
-        message: "User does not exist",
+        message: "Password and username does not match",
         success: false,
       });
       return;

@@ -1,27 +1,76 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import { useFormChange } from "./../components/utils/hook";
-import { usePostUserSignInMutation } from "../store/api/userApi";
+import {
+  postUserSignInResponse,
+  usePostUserSignInQuery,
+} from "../store/api/userApi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserToken } from "../store/slices/userSlice";
+
+interface ErrorResponse {
+  status: number;
+  data: {
+    message: string;
+    success: boolean;
+  };
+}
+
 const Signin = () => {
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+
   const { values, handleChange, resetValues } = useFormChange({
     username: "",
     password: "",
   });
-  const [signIn] = usePostUserSignInMutation();
+
+  const [isFormSubmit, setIsFormSubmit] = useState(false);
+  const username = values.username;
+  const password = values.password;
+
+  const { data, error, isLoading, isError, isSuccess } = usePostUserSignInQuery(
+    {
+      username,
+      password,
+    },
+    { skip: isFormSubmit === false },
+  );
 
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const username = values.username;
-      const password = values.password;
-
-      const payload = await signIn({ username, password }).unwrap();
-      console.log(payload.token);
-    } catch (err) {
-      setErrorMsg(err.data.message);
-    }
+    setIsFormSubmit(true);
   };
+
+  useEffect(() => {
+    const handleSuccessLogin = (data: postUserSignInResponse) => {
+      resetValues();
+      setErrorMsg("");
+      setIsFormSubmit(false);
+      dispatch(setUserToken(data.token));
+      navigateTo("/");
+    };
+
+    if (isError) {
+      setErrorMsg((error as ErrorResponse).data.message);
+      setIsFormSubmit(false);
+    }
+
+    if (isSuccess) {
+      handleSuccessLogin(data);
+    }
+  }, [
+    isError,
+    error,
+    isLoading,
+    isSuccess,
+    resetValues,
+    data,
+    navigateTo,
+    dispatch,
+  ]);
 
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
@@ -42,9 +91,6 @@ const Signin = () => {
                   id="username-label">
                   Username
                 </label>
-                <p className="helper-username text-red-500 inline text-base font-medium">
-                  {errorMsg}
-                </p>
               </div>
               <input
                 className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-sans"
@@ -72,14 +118,20 @@ const Signin = () => {
                 id="password"
                 type="password"
                 name="password"
+                autoComplete="on"
                 placeholder="Please enter your password here"
                 value={values.password}
                 onChange={handleChange}
               />
             </div>
           </div>
+
+          <p className=" text-red-500  text-base font-medium font-secondary text-center mt-3">
+            {errorMsg}
+          </p>
           <button
             className="bg-black text-white p-2 mt-5 rounded-lg flex justify-center font-secondary w-full"
+            disabled={isLoading}
             type="submit">
             Submit
           </button>

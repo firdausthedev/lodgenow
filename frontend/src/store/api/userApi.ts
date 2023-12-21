@@ -2,13 +2,13 @@ import { baseApi } from "./baseApi";
 
 export interface postUserSignInResponse {
   success: boolean;
-  message: string;
   token: string;
+  userId: string;
 }
 
 const userApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    postUserSignIn: build.mutation({
+    postUserSignIn: build.query({
       query: ({ username, password }) => ({
         url: `user/signin`,
         method: "POST",
@@ -23,4 +23,4 @@ const userApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { usePostUserSignInMutation } = userApi;
+export const { usePostUserSignInQuery } = userApi;
