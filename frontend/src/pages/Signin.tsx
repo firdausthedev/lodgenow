@@ -4,6 +4,7 @@ import { postUserResponse, usePostUserSignInQuery } from "../store/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../store/slices/userSlice";
+import { SERVER_ERROR_MSG } from "./../components/utils/constants";
 
 interface ErrorResponse {
   status: number;
@@ -57,6 +58,8 @@ const Signin = () => {
     if (isSuccess) {
       if (data.success) {
         handleLogin(data);
+      } else {
+        setErrorMsg(SERVER_ERROR_MSG);
       }
     }
   }, [

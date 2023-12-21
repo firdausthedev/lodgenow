@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../store/slices/userSlice";
+import { SERVER_ERROR_MSG } from "../components/utils/constants";
 
 interface ErrorResponse {
   status: number;
@@ -70,7 +71,7 @@ const Register = () => {
         if (errorResponse.data.errCode === "P2002") {
           setErrorMsg("username already taken");
         } else {
-          setErrorMsg("Something went wrong");
+          setErrorMsg(SERVER_ERROR_MSG);
         }
       }
       setIsFormSubmit(false);
@@ -79,6 +80,8 @@ const Register = () => {
     if (isSuccess) {
       if (data.success) {
         handleRegister(data);
+      } else {
+        setErrorMsg(SERVER_ERROR_MSG);
       }
     }
   }, [

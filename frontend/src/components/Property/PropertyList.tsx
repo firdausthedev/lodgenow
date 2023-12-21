@@ -99,28 +99,27 @@ const PropertyList = ({
     }
   }
 
-  if (data)
-    return (
-      <div className="w-full mx-auto">
-        <div className="grid grid-cols-3 gap-2">
-          {data.data.map(property => {
-            return (
-              <PropertyCard
-                key={property.id}
-                property={property}
-                averageRatings={property.averageRating}
-                totalReviews={property.totalReviews}
-              />
-            );
-          })}
-        </div>
-
-        <Pagination
-          pagination={data.pagination}
-          onPageChange={handlePageChange}
-        />
+  return (
+    <main className="w-full mx-auto">
+      <div className="grid grid-cols-3 gap-2">
+        {data.data.map(property => {
+          return (
+            <PropertyCard
+              key={property.id}
+              property={property}
+              averageRatings={property.averageRating}
+              totalReviews={property.totalReviews}
+            />
+          );
+        })}
       </div>
-    );
+
+      <Pagination
+        pagination={data.pagination}
+        onPageChange={handlePageChange}
+      />
+    </main>
+  );
 };
 
 export default PropertyList;
