@@ -7,7 +7,6 @@ import PropertyList from "../../components/Property/PropertyList";
 import { useSelector } from "react-redux";
 import { selectSearchTerm } from "../../store/slices/searchSlice";
 import SideNav from "../../components/layout/SideNav";
-import Navbar from "../../components/layout/Navbar";
 
 const Homepage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +24,6 @@ const Homepage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex container mx-auto py-5">
         <SideNav
           type={type}

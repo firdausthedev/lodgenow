@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { FaXmark, FaStar, FaCheck, FaEnvelope } from "react-icons/fa6";
 
 import { getAgentResponse, useGetAgentQuery } from "../../store/api/agentApi";
+import { Property } from "../../store/types";
+import { useNavigate } from "react-router-dom";
 
 interface AgentModalProps {
   agentId: string;
@@ -11,6 +13,24 @@ interface AgentModalProps {
 
 interface dataProps {
   data: getAgentResponse;
+}
+
+interface agentListingProps {
+  data: getAgentResponse;
+  handlePropertyClick: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => void;
+}
+
+interface AgentPropertiesProps {
+  index: number;
+  numberOfProperties: number;
+  property: Property;
+  handlePropertyClick: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => void;
 }
 
 const AgentProfileCard = ({ data }: dataProps) => {
@@ -64,7 +84,7 @@ const AgentContactDetail = ({ data }: dataProps) => {
   );
 };
 
-const AgentListings = ({ data }: dataProps) => {
+const AgentListings = ({ data, handlePropertyClick }: agentListingProps) => {
   const maxPropertiesToShow = 2;
   const numberOfProperties = data.data.properties.length;
   return (
@@ -74,39 +94,66 @@ const AgentListings = ({ data }: dataProps) => {
         {data.data.properties
           .slice(0, maxPropertiesToShow)
           .map((property, index) => (
-            <div
-              key={index}
-              className={`${numberOfProperties > 1 ? "w-full" : "w-1/2"}`}>
-              <div
-                className="h-40 w-full shadow-md rounded-md bg-center bg-cover bg-no-repeat"
-                style={{
-                  backgroundImage: `url('${property.photos[0]}')`,
-                }}
-              />
-              <div className="flex justify-between mt-2">
-                <p className="font-primary font-bold text-sm leading-none mt-1">
-                  {property.name}
-                </p>
-                <div className="flex gap-1">
-                  <FaStar className="text-xs" />
-                  <p className="font-light text-sm font-secondary leading-none  break-words">
-                    {property.averageRating}
-                  </p>
-                </div>
-              </div>
-              <p className="font-secondary font-light text-sm leading-none text-gray-700">
-                {property.location}
-              </p>
-            </div>
+            <AgentProperties
+              key={property.id}
+              index={index}
+              handlePropertyClick={handlePropertyClick}
+              numberOfProperties={numberOfProperties}
+              property={property}
+            />
           ))}
       </div>
     </div>
   );
 };
 
+const AgentProperties = ({
+  index,
+  numberOfProperties,
+  property,
+  handlePropertyClick,
+}: AgentPropertiesProps) => {
+  return (
+    <div
+      key={index}
+      className={`${numberOfProperties > 1 ? "w-full" : "w-1/2"}`}>
+      <button
+        onClick={e => handlePropertyClick(e, property.id)}
+        className="h-40 w-full shadow-md rounded-md bg-center bg-cover bg-no-repeat"
+        style={{
+          backgroundImage: `url('${property.photos[0]}')`,
+        }}
+      />
+      <div className="flex justify-between mt-2">
+        <p className="font-primary font-bold text-sm leading-none mt-1">
+          {property.name}
+        </p>
+        <div className="flex gap-1">
+          <FaStar className="text-xs" />
+          <p className="font-light text-sm font-secondary leading-none  break-words">
+            {property.averageRating}
+          </p>
+        </div>
+      </div>
+      <p className="font-secondary font-light text-sm leading-none text-gray-700">
+        {property.location}
+      </p>
+    </div>
+  );
+};
+
 const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
   const { isLoading, error, data } = useGetAgentQuery(agentId);
-  if (isLoading || !data) {
+  const navigateTo = useNavigate();
+
+  const handlePropertyClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => {
+    navigateTo(`/property/${id}`);
+  };
+
+  if (isLoading) {
     return createPortal(
       <div
         aria-label="modal"
@@ -131,7 +178,7 @@ const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
     );
   }
 
-  if (error) {
+  if (error || !data) {
     return createPortal(
       <div
         aria-label="modal"
@@ -171,7 +218,7 @@ const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
         </button>
         <AgentProfileCard data={data} />
         <AgentContactDetail data={data} />
-        <AgentListings data={data} />
+        <AgentListings data={data} handlePropertyClick={handlePropertyClick} />
       </div>
     </div>,
     document.getElementById("modal") as HTMLElement,
