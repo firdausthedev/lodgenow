@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import {
   useGetAllPropertyQuery,
   useSearchProperty,
-} from "../store/api/propertyApi";
-import PropertyList from "../components/Property/PropertyList";
+} from "../../store/api/propertyApi";
+import PropertyList from "../../components/Property/PropertyList";
 import { useSelector } from "react-redux";
-import { selectSearchTerm } from "../store/slices/searchSlice";
-import SideNav from "../components/layout/SideNav";
-import Navbar from "../components/layout/Navbar";
+import { selectSearchTerm } from "../../store/slices/searchSlice";
+import SideNav from "../../components/layout/SideNav";
+import Navbar from "../../components/layout/Navbar";
 
 const Homepage = () => {
   const [currentPage, setCurrentPage] = useState(1);

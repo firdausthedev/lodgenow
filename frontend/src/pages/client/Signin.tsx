@@ -1,33 +1,23 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { useFormChange } from "./../components/utils/hook";
+import { useFormChange } from "../../components/utils/hook";
 import {
   postUserResponse,
-  usePostUserRegisterQuery,
-} from "../store/api/userApi";
+  usePostUserSignInQuery,
+} from "../../store/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserToken } from "../store/slices/userSlice";
-import { SERVER_ERROR_MSG } from "../components/utils/constants";
+import { setUserToken } from "../../store/slices/userSlice";
+import { SERVER_ERROR_MSG } from "../../components/utils/constants";
 
 interface ErrorResponse {
   status: number;
   data: {
-    errors?: inputValidationError[];
     message: string;
-    errCode: string;
-    success: false;
+    success: boolean;
   };
 }
 
-interface inputValidationError {
-  type: string;
-  value: string;
-  msg: string;
-  path: string;
-  location: string;
-}
-
-const Register = () => {
+const Signin = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,14 +28,13 @@ const Register = () => {
 
   const [isFormSubmit, setIsFormSubmit] = useState(false);
 
-  const { data, error, isLoading, isError, isSuccess } =
-    usePostUserRegisterQuery(
-      {
-        username: values.username,
-        password: values.password,
-      },
-      { skip: isFormSubmit === false },
-    );
+  const { data, error, isLoading, isError, isSuccess } = usePostUserSignInQuery(
+    {
+      username: values.username,
+      password: values.password,
+    },
+    { skip: isFormSubmit === false },
+  );
 
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -55,7 +44,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    const handleRegister = (data: postUserResponse) => {
+    const handleLogin = (data: postUserResponse) => {
       resetValues();
       setErrorMsg("");
       setIsFormSubmit(false);
@@ -65,21 +54,13 @@ const Register = () => {
 
     if (isError) {
       const errorResponse = error as ErrorResponse;
-      if (errorResponse.data.errors) {
-        setErrorMsg(errorResponse.data.errors[0].msg);
-      } else {
-        if (errorResponse.data.errCode === "P2002") {
-          setErrorMsg("username already taken");
-        } else {
-          setErrorMsg(SERVER_ERROR_MSG);
-        }
-      }
+      setErrorMsg(errorResponse.data.message);
       setIsFormSubmit(false);
     }
 
     if (isSuccess) {
       if (data.success) {
-        handleRegister(data);
+        handleLogin(data);
       } else {
         setErrorMsg(SERVER_ERROR_MSG);
       }
@@ -94,6 +75,7 @@ const Register = () => {
     navigateTo,
     dispatch,
   ]);
+
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">
@@ -102,7 +84,7 @@ const Register = () => {
           href="/">
           lodgenow
         </a>
-        <h1 className="text-lg font-primary font-bold">Create an account</h1>
+        <h1 className="text-lg font-primary font-bold">Signin</h1>
         <form onSubmit={handleFormSubmit}>
           <div className="flex flex-col gap-3 mt-1">
             <div>
@@ -133,6 +115,7 @@ const Register = () => {
                   id="password-label">
                   Password
                 </label>
+                <p className="helper-password text-red-500 inline text-base font-medium"></p>
               </div>
               <input
                 className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-sans"
@@ -144,10 +127,6 @@ const Register = () => {
                 value={values.password}
                 onChange={handleChange}
               />
-              <p className="helper-password text-gray-500 font-normal font-secondary text-xs mt-1">
-                6+ characters with at least one uppercase, one lowercase, one
-                number, and one special character.
-              </p>
             </div>
           </div>
 
@@ -156,6 +135,7 @@ const Register = () => {
           </p>
           <button
             className="bg-black text-white p-2 mt-5 rounded-lg flex justify-center font-secondary w-full"
+            disabled={isLoading}
             type="submit">
             Submit
           </button>
@@ -165,4 +145,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signin;
