@@ -15,22 +15,10 @@ interface dataProps {
   data: getAgentResponse;
 }
 
-interface agentListingProps {
-  data: getAgentResponse;
-  handlePropertyClick: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: string,
-  ) => void;
-}
-
 interface AgentPropertiesProps {
   index: number;
   numberOfProperties: number;
   property: Property;
-  handlePropertyClick: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: string,
-  ) => void;
 }
 
 const AgentProfileCard = ({ data }: dataProps) => {
@@ -61,7 +49,7 @@ const AgentProfileCard = ({ data }: dataProps) => {
           <div>
             <div className="flex items-center gap-1">
               <p className="font-bold text-3xl font-primary leading-none mt-2 break-words">
-                {data.data.averageRating}
+                {data.data.averageRating.toPrecision(3)}
               </p>
               <FaStar className="text-sm" />
             </div>
@@ -84,7 +72,7 @@ const AgentContactDetail = ({ data }: dataProps) => {
   );
 };
 
-const AgentListings = ({ data, handlePropertyClick }: agentListingProps) => {
+const AgentListings = ({ data }: dataProps) => {
   const maxPropertiesToShow = 2;
   const numberOfProperties = data.data.properties.length;
   return (
@@ -97,7 +85,6 @@ const AgentListings = ({ data, handlePropertyClick }: agentListingProps) => {
             <AgentProperties
               key={property.id}
               index={index}
-              handlePropertyClick={handlePropertyClick}
               numberOfProperties={numberOfProperties}
               property={property}
             />
@@ -111,14 +98,19 @@ const AgentProperties = ({
   index,
   numberOfProperties,
   property,
-  handlePropertyClick,
 }: AgentPropertiesProps) => {
+  const navigateTo = useNavigate();
+
+  const handlePropertyClick = (id: string) => {
+    navigateTo(`/property/${id}`);
+  };
+
   return (
     <div
       key={index}
       className={`${numberOfProperties > 1 ? "w-full" : "w-1/2"}`}>
       <button
-        onClick={e => handlePropertyClick(e, property.id)}
+        onClick={() => handlePropertyClick(property.id)}
         className="h-40 w-full shadow-md rounded-md bg-center bg-cover bg-no-repeat"
         style={{
           backgroundImage: `url('${property.photos[0]}')`,
@@ -144,14 +136,6 @@ const AgentProperties = ({
 
 const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
   const { isLoading, error, data } = useGetAgentQuery(agentId);
-  const navigateTo = useNavigate();
-
-  const handlePropertyClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: string,
-  ) => {
-    navigateTo(`/property/${id}`);
-  };
 
   if (isLoading) {
     return createPortal(
@@ -218,7 +202,7 @@ const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
         </button>
         <AgentProfileCard data={data} />
         <AgentContactDetail data={data} />
-        <AgentListings data={data} handlePropertyClick={handlePropertyClick} />
+        <AgentListings data={data} />
       </div>
     </div>,
     document.getElementById("modal") as HTMLElement,

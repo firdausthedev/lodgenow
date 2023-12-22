@@ -32,6 +32,8 @@ const main = async () => {
           "https://images.unsplash.com/photo-1531835551805-16d864c8d311",
           "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688",
           "https://images.unsplash.com/photo-1585128792103-0b591f96512e",
+          "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92",
+          "https://images.unsplash.com/photo-1505577058444-a3dab90d4253",
         ],
         agentId: "adf2939b-8283-4694-9621-93b141f07a23",
       },

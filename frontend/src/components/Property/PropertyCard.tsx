@@ -14,7 +14,7 @@ const PropertyCardPhotos = ({ property }: { property: Property }) => {
   return (
     <div
       id="property-card"
-      className="h-80 w-full shadow-md rounded-lg bg-center bg-cover bg-no-repeat relative"
+      className="h-80 w-full shadow-md rounded-lg bg-center bg-cover bg-no-repeat relative "
       style={{
         backgroundImage: `url('${property.photos[0]}')`,
       }}>
@@ -37,9 +37,11 @@ const PropertyCardDetails = ({
           {property.name}
         </p>
         <div className="flex gap-1">
-          <FaStar className="text-sm " />
+          {totalReviews >= 1 && <FaStar className="text-sm " />}
           <p className="font-light text-base font-secondary leading-none break-words">
-            {averageRatings} ({totalReviews})
+            {totalReviews === 0
+              ? ""
+              : `${averageRatings.toPrecision(3)} (${totalReviews})`}
           </p>
         </div>
       </div>

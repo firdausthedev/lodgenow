@@ -186,7 +186,25 @@ export const geOneProperty = async (
         reviews: true,
       },
     });
-    res.json({ data: property, success: true });
+    if (!property) {
+      return res
+        .status(400)
+        .json({ message: "Property does not exists.", success: false });
+    }
+
+    const totalReviews = property.reviews.length;
+    const averageRating =
+      totalReviews > 0
+        ? property.reviews.reduce((sum, review) => sum + review.rating, 0) /
+          totalReviews
+        : 0;
+
+    const propertyWithAggregate = {
+      ...property,
+      totalReviews,
+      averageRating,
+    };
+    res.json({ data: propertyWithAggregate, success: true });
   } catch (error) {
     next(error);
   }

@@ -17,6 +17,11 @@ export interface getAllPropertyResponse {
   };
 }
 
+export interface getOnePropertyResponse {
+  success: boolean;
+  data: Property;
+}
+
 const propertyApi = baseApi.injectEndpoints({
   endpoints: build => ({
     getAllProperty: build.query<
@@ -31,6 +36,15 @@ const propertyApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: getAllPropertyResponse) => response,
+    }),
+    getOneProperty: build.query({
+      query: id => {
+        return {
+          url: `property/${id}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: getOnePropertyResponse) => response,
     }),
   }),
   overrideExisting: false,
@@ -60,4 +74,4 @@ export const useSearchProperty = (name: string) => {
   };
 };
 
-export const { useGetAllPropertyQuery } = propertyApi;
+export const { useGetAllPropertyQuery, useGetOnePropertyQuery } = propertyApi;
