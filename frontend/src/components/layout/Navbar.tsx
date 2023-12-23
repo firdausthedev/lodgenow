@@ -3,12 +3,22 @@ import SearchInput from "./SearchInput";
 import { FaCartShopping } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserToken, selectUser } from "../../store/slices/userSlice";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { token } = useSelector(selectUser);
+
   const handleLogout = () => {
     dispatch(clearUserToken());
+  };
+
+  const SearchInputWrapper = () => {
+    const location = useLocation();
+    const showSearchInputPaths = ["/"];
+    const isSearchInputShow = showSearchInputPaths.includes(location.pathname);
+
+    return isSearchInputShow && <SearchInput />;
   };
 
   return (
@@ -18,7 +28,7 @@ const Navbar = () => {
           <a href="/">
             <h1 className="font-bold text-xl font-primary">lodgenow</h1>
           </a>
-          <SearchInput />
+          <SearchInputWrapper />
         </div>
         <div className="flex gap-2 items-center">
           {token && (
