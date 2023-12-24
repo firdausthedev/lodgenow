@@ -5,8 +5,8 @@ import Spinner from "../../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "./../../../components/utils/constants";
 import { Property } from "../../../store/types";
 import { FaCircle, FaStar } from "react-icons/fa6";
-import AgentCard from "../../../components/Agent/AgentCard";
 import AgentModal from "../../../components/Agent/AgentModal";
+import DateInput from "../../../components/Input/DateInput";
 
 interface ErrorResponse {
   status: number;
@@ -35,7 +35,6 @@ const PropertyPage = () => {
 
   if (isError || !property) {
     if (error) {
-      console.log(error);
       const errorResponse = error as ErrorResponse;
       return (
         <main className="container mt-3">
@@ -55,7 +54,7 @@ const PropertyPage = () => {
 
   const PropertyGallery = ({ photos }: { photos: string[] }) => {
     return (
-      <div className="flex h-[28.75rem] gap-2">
+      <div className="flex h-[32rem] gap-2">
         <div
           className="bg-center bg-cover bg-no-repeat rounded-tl-3xl rounded-bl-3xl brightness-90 flex w-1/2 -mt-2"
           style={{ backgroundImage: `url('${photos[0]}')` }}
@@ -81,7 +80,7 @@ const PropertyPage = () => {
 
   const PropertyDetails = ({ property }: { property: Property }) => {
     return (
-      <div className="py-8 flex flex-col">
+      <div className="pb-8 flex flex-col">
         <h2 className="font-primary text-3xl font-medium">
           {property.location}
         </h2>
@@ -114,7 +113,7 @@ const PropertyPage = () => {
     const [isModal, setIsModal] = useState(false);
     return (
       <>
-        <div className="py-8 border-t-2 border-b-2 border-gray-300/30 flex gap-4 items-center">
+        <div className="py-8 border-t-2 border-b-2 border-gray-300/30 flex gap-4 items-center w-full h-fit">
           <button
             onClick={() => setIsModal(true)}
             className="bg-top bg-cover bg-no-repeat  brightness-90 h-16 w-16 rounded-full"
@@ -131,16 +130,37 @@ const PropertyPage = () => {
     );
   };
 
+  const BookingCard = ({ property }: { property: Property }) => {
+    return (
+      <div className="mt-8 w-[40rem] h-fit bg-white border shadow-lg rounded-lg p-6">
+        <h3 className="font-primary font-medium text-3xl">
+          ${property.price}
+          <span className="font-light text-xl"> night</span>
+        </h3>
+        <DateInput />
+        <button className="p-4 bg-black w-full rounded-md text-white mt-4">
+          Add to cart
+        </button>
+      </div>
+    );
+  };
+
   return (
     <main className="container">
-      <div className="py-8 flex flex-col gap-5">
+      <div className="my-8">
         <h1 className="font-primary text-4xl font-medium">
           {property.data.name}
         </h1>
       </div>
       <PropertyGallery photos={property.data.photos} />
-      <PropertyDetails property={property.data} />
-      <PropertyAgent property={property.data} />
+      <div className="flex pb-8 gap-20 h-[20rem]">
+        <div className="w-full mt-8 ">
+          <PropertyDetails property={property.data} />
+          <PropertyAgent property={property.data} />
+        </div>
+        <BookingCard property={property.data} />
+      </div>
+      <div>Reviews...</div>
     </main>
   );
 };

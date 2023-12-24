@@ -45,7 +45,7 @@ const PropertyCardDetails = ({
           </p>
         </div>
       </div>
-      <p className="font-secondary font-light text-base  text-gray-700">
+      <p className="font-secondary font-light text-base text-gray-600">
         {property.location}
       </p>
       <p className="font-secondary font-semibold text-base mt-2">
