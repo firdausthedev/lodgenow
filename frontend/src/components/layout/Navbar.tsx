@@ -37,23 +37,27 @@ const Navbar = () => {
           {token && (
             <button
               onClick={handleLogout}
-              className="font-normal font-secondary">
+              className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
               logout
             </button>
           )}
           {!token && (
             <div className="flex gap-2">
-              <a href="/signin" className="font-normal font-secondary">
+              <a
+                href="/signin"
+                className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
                 Login
               </a>
-              <a href="/register" className="font-normal font-secondary">
+              <a
+                href="/register"
+                className="font-normal font-secondary border border-accent text-accent  py-1 px-3 rounded-md text-sm">
                 Signup
               </a>
             </div>
           )}
 
           <button className="font-normal font-secondary" onClick={() => {}}>
-            <FaCartShopping />
+            <FaCartShopping className="text-accent" />
           </button>
         </div>
       </div>

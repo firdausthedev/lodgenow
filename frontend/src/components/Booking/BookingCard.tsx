@@ -10,7 +10,7 @@ const BookingCard = ({ property }: { property: Property }) => {
         <span className="font-light text-xl"> night</span>
       </h3>
       <DateInput />
-      <button className="p-4 bg-black w-full rounded-md text-white mt-4">
+      <button className="p-4 bg-accent w-full rounded-md text-white mt-4 hover:bg-accent-100 transition-colors duration-150 ease-in-out font-secondary">
         Add to cart
       </button>
     </div>
