@@ -12,6 +12,13 @@ module.exports = {
         sm: { max: "640px" },
       },
       colors: {
+        accent: {
+          DEFAULT: "#FF385C",
+          100: "#CC566B",
+          200: "#995F6A",
+          600: "#665457",
+          700: "#33282A",
+        },
         brown: { 200: "#f0efe9" },
         loadingGray: "#EBEBEB",
       },

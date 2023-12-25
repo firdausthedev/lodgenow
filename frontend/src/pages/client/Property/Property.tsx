@@ -132,12 +132,10 @@ const PropertyPage = () => {
   };
 
   return (
-    <main className="container">
-      <div className="my-8">
-        <h1 className="font-primary text-4xl font-medium">
-          {property.data.name}
-        </h1>
-      </div>
+    <main className="container py-12">
+      <h1 className="font-primary text-4xl font-medium mb-8">
+        {property.data.name}
+      </h1>
       <PropertyGallery photos={property.data.photos} />
       <div className="flex pb-8 gap-20 h-[20rem]">
         <div className="w-full mt-8 ">
@@ -146,7 +144,7 @@ const PropertyPage = () => {
         </div>
         <BookingCard property={property.data} />
       </div>
-      <div id="reviews" className="flex gap-8 pb-8">
+      <div id="reviews" className="flex flex-col gap-8 ">
         {property.data.reviews.map(review => {
           return <ReviewCard key={review.id} review={review} />;
         })}

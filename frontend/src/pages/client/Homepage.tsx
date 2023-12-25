@@ -24,7 +24,7 @@ const Homepage = () => {
 
   return (
     <>
-      <div className="flex container mx-auto py-5">
+      <div className="flex container mx-auto py-12 gap-5">
         <SideNav
           type={type}
           setType={setType}

@@ -22,14 +22,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="p-5 bg-gray-300">
+    <nav className="p-5 bg-white border-b">
       <div className="container flex justify-between">
-        <div className="flex gap-5  items-center">
+        <div className="flex gap-5 items-center">
           <a href="/">
-            <h1 className="font-bold text-xl font-primary">lodgenow</h1>
+            <h1 className="font-semibold text-2xl font-secondary text-accent">
+              lodgenow
+            </h1>
           </a>
-          <SearchInputWrapper />
         </div>
+        <SearchInputWrapper />
+
         <div className="flex gap-2 items-center">
           {token && (
             <button
