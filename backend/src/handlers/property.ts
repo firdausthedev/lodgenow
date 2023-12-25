@@ -48,19 +48,13 @@ export const getAllProperty = async (
           location: true,
           price: true,
           photos: true,
-          type: true,
           agent: {
             select: {
               id: true,
               photo: true,
             },
           },
-          reviews: {
-            select: {
-              id: true,
-              rating: true,
-            },
-          },
+          reviews: true,
         },
         skip: startIndex,
         take: limit,
@@ -107,25 +101,18 @@ export const getAllProperty = async (
           type: "asc",
         },
         select: {
-          _count: true,
           id: true,
           name: true,
           location: true,
           price: true,
           photos: true,
-          type: true,
           agent: {
             select: {
               id: true,
               photo: true,
             },
           },
-          reviews: {
-            select: {
-              id: true,
-              rating: true,
-            },
-          },
+          reviews: true,
         },
         skip: startIndex,
         take: limit,

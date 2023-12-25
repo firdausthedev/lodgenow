@@ -12,6 +12,7 @@ import Signin from "./pages/client/Signin";
 import Register from "./pages/client/Register";
 import PropertyPage from "./pages/client/Property/Property";
 import Navbar from "./components/layout/Navbar";
+import BookingPage from "./pages/client/Booking/Booking";
 
 const App = () => {
   const NavbarWrapper = () => {
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/property/:id" element={<PropertyPage />} />
+          <Route path="/booking" element={<BookingPage />} />
         </Routes>
       </Router>
     </Provider>

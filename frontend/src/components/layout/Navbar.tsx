@@ -3,14 +3,16 @@ import SearchInput from "./SearchInput";
 import { FaCartShopping } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserToken, selectUser } from "../../store/slices/userSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { token } = useSelector(selectUser);
+  const navigateTo = useNavigate();
 
   const handleLogout = () => {
     dispatch(clearUserToken());
+    navigateTo("/");
   };
 
   const SearchInputWrapper = () => {
@@ -35,11 +37,18 @@ const Navbar = () => {
 
         <div className="flex gap-2 items-center">
           {token && (
-            <button
-              onClick={handleLogout}
-              className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
-              logout
-            </button>
+            <div className="flex gap-2">
+              <a
+                href="/booking"
+                className="font-normal font-secondary bg-accent-200 text-white py-1 px-3 rounded-md text-sm">
+                Order
+              </a>
+              <button
+                onClick={handleLogout}
+                className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
+                Logout
+              </button>
+            </div>
           )}
           {!token && (
             <div className="flex gap-2">
