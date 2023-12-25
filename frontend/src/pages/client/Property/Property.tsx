@@ -6,7 +6,8 @@ import { SERVER_ERROR_MSG } from "./../../../components/utils/constants";
 import { Property } from "../../../store/types";
 import { FaCircle, FaStar } from "react-icons/fa6";
 import AgentModal from "../../../components/Agent/AgentModal";
-import DateInput from "../../../components/Input/DateInput";
+import ReviewCard from "../../../components/Review/ReviewCard";
+import BookingCard from "../../../components/Booking/BookingCard";
 
 interface ErrorResponse {
   status: number;
@@ -130,21 +131,6 @@ const PropertyPage = () => {
     );
   };
 
-  const BookingCard = ({ property }: { property: Property }) => {
-    return (
-      <div className="mt-8 w-[40rem] h-fit bg-white border shadow-lg rounded-lg p-6">
-        <h3 className="font-primary font-medium text-3xl">
-          ${property.price}
-          <span className="font-light text-xl"> night</span>
-        </h3>
-        <DateInput />
-        <button className="p-4 bg-black w-full rounded-md text-white mt-4">
-          Add to cart
-        </button>
-      </div>
-    );
-  };
-
   return (
     <main className="container">
       <div className="my-8">
@@ -160,7 +146,11 @@ const PropertyPage = () => {
         </div>
         <BookingCard property={property.data} />
       </div>
-      <div>Reviews...</div>
+      <div id="reviews" className="flex gap-8 pb-8">
+        {property.data.reviews.map(review => {
+          return <ReviewCard key={review.id} review={review} />;
+        })}
+      </div>
     </main>
   );
 };

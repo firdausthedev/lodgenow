@@ -183,7 +183,17 @@ export const geOneProperty = async (
       },
       include: {
         agent: true,
-        reviews: true,
+        reviews: {
+          orderBy: { createdAt: "asc" },
+          include: {
+            user: {
+              select: {
+                username: true,
+                id: true,
+              },
+            },
+          },
+        },
       },
     });
     if (!property) {
