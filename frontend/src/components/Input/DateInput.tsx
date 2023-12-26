@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectBooking,
+  setCheckInDate,
+  setCheckOutDate,
+} from "../../store/slices/bookingSlice";
+
 const DateInput = () => {
-  const [checkInDate, setCheckInDate] = useState<Date>(new Date());
+  const { checkInDate, checkOutDate } = useSelector(selectBooking);
 
-  const tommorow = new Date();
-  tommorow.setDate(tommorow.getDate() + 1);
+  const minDate = new Date().toISOString().split("T")[0];
+  const minTommorow = new Date();
+  minTommorow.setDate(minTommorow.getDate() + 1);
 
-  const [checkOutDate, setCheckOutDate] = useState<Date>(tommorow);
-
+  const dispatch = useDispatch();
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     isCheckIn: boolean,
   ) => {
     if (isCheckIn) {
-      setCheckInDate(new Date(event.target.value));
+      dispatch(setCheckInDate(new Date(event.target.value).toISOString()));
     } else {
-      setCheckOutDate(new Date(event.target.value));
+      dispatch(setCheckOutDate(new Date(event.target.value).toISOString()));
     }
   };
 
@@ -29,8 +36,8 @@ const DateInput = () => {
         <input
           type="date"
           id="date-checkin"
-          min={checkInDate.toISOString().split("T")[0]}
-          value={checkInDate.toISOString().split("T")[0]}
+          min={minDate}
+          value={checkInDate.split("T")[0]}
           onChange={e => handleDateChange(e, true)}
         />
       </div>
@@ -43,8 +50,8 @@ const DateInput = () => {
         <input
           type="date"
           id="date-checkout"
-          min={checkOutDate.toISOString().split("T")[0]}
-          value={checkOutDate.toISOString().split("T")[0]}
+          min={minTommorow.toISOString().split("T")[0]}
+          value={checkOutDate.split("T")[0]}
           onChange={e => handleDateChange(e, false)}
         />
       </div>

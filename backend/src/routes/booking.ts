@@ -10,22 +10,11 @@ import {
   createBooking,
 } from "../handlers/booking";
 
-const isAfterCurrentDate: CustomValidator = (value: string) => {
-  const currentDate = new Date();
-  const checkInDate = new Date(value);
-
-  if (checkInDate <= currentDate) {
-    throw new Error("Check-in date must be after the current date");
-  }
-
-  return true;
-};
-
 const isBeforeCheckOut: CustomValidator = (value: string, { req }: Meta) => {
   const checkInDate = new Date(req.body.checkIn);
   const checkOutDate = new Date(value);
 
-  if (checkOutDate <= checkInDate) {
+  if (checkOutDate.getTime() <= checkInDate.getTime()) {
     throw new Error("Check-out date must be after the check-in date");
   }
 
@@ -56,8 +45,8 @@ router.get("/:id", protectedUser, getOneBooking);
 router.post(
   "/",
   protectedUser,
-  body("checkIn").isISO8601().custom(isAfterCurrentDate).toDate(),
-  body("checkOut").isISO8601().custom(isBeforeCheckOut).toDate(),
+  body("checkIn").isString(),
+  body("checkOut").isString().custom(isBeforeCheckOut).toDate(),
   body("propertyId").isString(),
   handleInputErrors,
   createBooking,
@@ -72,8 +61,8 @@ router.put(
   "/:id",
   protectedUser,
   checkExact([
-    body("checkIn").isISO8601().custom(isAfterCurrentDate).toDate(),
-    body("checkOut").isISO8601().custom(isBeforeCheckOut).toDate(),
+    body("checkIn").isString(),
+    body("checkOut").isString().custom(isBeforeCheckOut).toDate(),
     body("propertyId").isString(),
   ]),
   handleInputErrors,

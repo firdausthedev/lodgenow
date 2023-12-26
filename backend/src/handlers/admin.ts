@@ -11,8 +11,15 @@ export const signin = async (
     const admin = await prisma.admin.findUnique({
       where: { username: req.body.username },
     });
-    console.log(admin);
-    const isValid = await comparePasswords(req.body.password, admin!.password);
+    if (!admin) {
+      res.status(404);
+      res.json({
+        message: "Password and username does not match",
+        success: false,
+      });
+      return;
+    }
+    const isValid = await comparePasswords(req.body.password, admin.password);
 
     if (!isValid) {
       res.status(401);
@@ -22,7 +29,7 @@ export const signin = async (
       });
       return;
     }
-    const token = createJWT(admin!, "admin");
+    const token = createJWT(admin, "admin");
     res.json({ token, success: true });
   } catch (error) {
     next(error);

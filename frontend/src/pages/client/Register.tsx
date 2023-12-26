@@ -1,9 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { useFormChange } from "../../components/utils/hook";
-import {
-  postUserResponse,
-  usePostUserRegisterQuery,
-} from "../../store/api/userApi";
+import { postUserResponse, useCreateUserQuery } from "../../store/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../../store/slices/userSlice";
@@ -38,14 +35,13 @@ const Register = () => {
 
   const [isFormSubmit, setIsFormSubmit] = useState(false);
 
-  const { data, error, isLoading, isError, isSuccess } =
-    usePostUserRegisterQuery(
-      {
-        username: values.username,
-        password: values.password,
-      },
-      { skip: isFormSubmit === false },
-    );
+  const { data, error, isLoading, isError, isSuccess } = useCreateUserQuery(
+    {
+      username: values.username,
+      password: values.password,
+    },
+    { skip: isFormSubmit === false },
+  );
 
   const [errorMsg, setErrorMsg] = useState("");
 

@@ -20,7 +20,7 @@ const userApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: postUserResponse) => response,
     }),
-    postUserRegister: build.query({
+    createUser: build.query({
       query: ({ username, password }) => ({
         url: `user`,
         method: "POST",
@@ -35,4 +35,4 @@ const userApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { usePostUserSignInQuery, usePostUserRegisterQuery } = userApi;
+export const { usePostUserSignInQuery, useCreateUserQuery } = userApi;

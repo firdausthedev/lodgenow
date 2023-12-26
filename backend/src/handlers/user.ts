@@ -48,7 +48,7 @@ export const signin = async (
       return;
     }
 
-    const isValid = await comparePasswords(req.body.password, user!.password);
+    const isValid = await comparePasswords(req.body.password, user.password);
 
     if (!isValid) {
       res.status(401);
@@ -58,7 +58,7 @@ export const signin = async (
       });
       return;
     }
-    const token = createJWT(user!, "user");
+    const token = createJWT(user, "user");
     res.json({ token, success: true });
   } catch (error) {
     next(error);

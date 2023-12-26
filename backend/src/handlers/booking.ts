@@ -13,8 +13,18 @@ export const getAllBookings = async (
       where: {
         userId: req.user!.id,
       },
-      include: {
-        payment: true,
+      select: {
+        id: true,
+        property: {
+          select: {
+            name: true,
+          },
+        },
+        payment: {
+          select: {
+            status: true,
+          },
+        },
       },
     });
 
@@ -55,6 +65,7 @@ export const getOneBooking = async (
       },
       include: {
         payment: true,
+        property: true,
       },
     });
     res.json({ data: booking, success: true });
@@ -72,7 +83,8 @@ export const createBooking = async (
     const isClashed = await isBookingClash(req);
 
     if (isClashed) {
-      return res.status(404).json({
+      res.status(404);
+      return res.json({
         message:
           "Booking clash: There is already a booking for the specified dates",
         success: false,
@@ -87,8 +99,9 @@ export const createBooking = async (
       },
     });
 
-    if (pendingBookings) {
-      return res.status(404).json({
+    if (pendingBookings.length > 0) {
+      res.status(404);
+      return res.json({
         message: "You have a pending booking for this property",
         success: false,
       });

@@ -29,9 +29,22 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: getOneBookingResponse) => response,
     }),
+    createBooking: build.mutation({
+      query: ({ token, checkInDate, checkOutDate, propertyId }) => ({
+        url: "booking/",
+        method: "POST",
+        body: { checkIn: checkInDate, checkOut: checkOutDate, propertyId },
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: getOneBookingResponse) => response,
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetAllBookingQuery, useGetOneBookingQuery } = bookingApi;
+export const {
+  useGetAllBookingQuery,
+  useGetOneBookingQuery,
+  useCreateBookingMutation,
+} = bookingApi;

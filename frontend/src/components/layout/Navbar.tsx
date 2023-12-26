@@ -41,7 +41,7 @@ const Navbar = () => {
               <a
                 href="/booking"
                 className="font-normal font-secondary bg-accent-200 text-white py-1 px-3 rounded-md text-sm">
-                Order
+                Orders
               </a>
               <button
                 onClick={handleLogout}

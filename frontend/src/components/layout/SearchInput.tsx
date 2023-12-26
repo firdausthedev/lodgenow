@@ -10,7 +10,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 const SearchInput = () => {
   const searchTerm = useSelector(selectSearchTerm);
   const dispatch = useDispatch();
-  const handleInputChange = event => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchTerm(event.target.value));
   };
 
