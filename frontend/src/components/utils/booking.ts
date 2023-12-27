@@ -5,7 +5,8 @@ export const calculateNumberOfNights = (
   const newCheckInDate = new Date(checkInDate);
   const newCheckOutDate = new Date(checkOutDate);
 
-  const numberOfNights = newCheckOutDate.getDate() - newCheckInDate.getDate();
+  const timeDifference = newCheckOutDate.getTime() - newCheckInDate.getTime();
+  const numberOfNights = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
   return numberOfNights;
 };

@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectCart, setTotal } from "../../store/slices/cartSlice";
 import { selectUser } from "../../store/slices/userSlice";
 import { useGetAllBookingQuery } from "../../store/api/bookingApi";
 import Spinner from "./Spinner";
 
 const Cart = () => {
-  const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const { total } = useSelector(selectCart);
 

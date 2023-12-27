@@ -1,10 +1,11 @@
 import React from "react";
 import { Booking } from "../../../store/types";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCart } from "../../../store/slices/cartSlice";
+import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/userSlice";
-import { useGetAllBookingQuery } from "../../../store/api/bookingApi";
+import {
+  useDeleteBookingMutation,
+  useGetAllBookingQuery,
+} from "../../../store/api/bookingApi";
 import Spinner from "../../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "../../../components/utils/constants";
 import {
@@ -13,16 +14,13 @@ import {
 } from "../../../components/utils/booking";
 
 const PaymentPage = () => {
-  const navigateTo = useNavigate();
-  const dispatch = useDispatch();
-  const { total } = useSelector(selectCart);
-
   const { token } = useSelector(selectUser);
   const {
     data: bookings,
     isLoading,
     isError,
     error,
+    refetch,
   } = useGetAllBookingQuery(token);
 
   if (isLoading) {
@@ -76,7 +74,7 @@ const PaymentPage = () => {
             <p>Total:</p>
             <p className="text-black">${totalPrice}</p>
           </div>
-          <button className="bg-accent w-full text-white py-3 rounded-lg">
+          <button className="bg-accent w-full text-white py-3 rounded-lg uppercase">
             Proceed to checkout
           </button>
         </div>
@@ -88,6 +86,27 @@ const PaymentPage = () => {
     const checkInDate = new Date(booking.checkIn).toISOString();
     const checkOutDate = new Date(booking.checkOut).toISOString();
     const numberOfNights = calculateNumberOfNights(checkInDate, checkOutDate);
+
+    const [deleteBooking] = useDeleteBookingMutation();
+
+    const handleDelete = async () => {
+      try {
+        const result = await deleteBooking({
+          token,
+          bookingId: booking.id,
+        });
+        if ("error" in result) {
+          console.log("error");
+        }
+
+        if ("data" in result) {
+          console.log("success");
+          refetch();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     return (
       <div className="flex gap-3">
@@ -104,7 +123,9 @@ const PaymentPage = () => {
             <p>Until: {convertDateToString(booking.checkOut)}</p>
           </div>
           <div className="flex justify-between">
-            <button className="underline font-secondary text-red-500 uppercase">
+            <button
+              onClick={handleDelete}
+              className="underline font-secondary text-red-500 uppercase">
               Remove
             </button>
             <p className="font-secondary font-medium">

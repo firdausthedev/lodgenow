@@ -38,6 +38,14 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: getOneBookingResponse) => response,
     }),
+    deleteBooking: build.mutation({
+      query: ({ token, bookingId }) => ({
+        url: `booking/${bookingId}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: getOneBookingResponse) => response,
+    }),
   }),
 
   overrideExisting: false,
@@ -47,4 +55,5 @@ export const {
   useGetAllBookingQuery,
   useGetOneBookingQuery,
   useCreateBookingMutation,
+  useDeleteBookingMutation,
 } = bookingApi;
