@@ -73,7 +73,7 @@ export const createPayment = async (
     const payment = await prisma.payment.create({
       data: {
         amount: req.body.amount,
-        status: "PENDING",
+        status: "COMPLETED",
         bookingId: req.body.bookingId,
       },
     });

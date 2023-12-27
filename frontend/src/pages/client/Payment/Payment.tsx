@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Booking } from "../../../store/types";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/userSlice";
@@ -6,15 +6,14 @@ import {
   useDeleteBookingMutation,
   useGetAllBookingQuery,
 } from "../../../store/api/bookingApi";
+import { useCreatePaymentMutation } from "../../../store/api/paymentApi";
 import Spinner from "../../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "../../../components/utils/constants";
-import {
-  calculateNumberOfNights,
-  convertDateToString,
-} from "../../../components/utils/booking";
+import { calculateNumberOfNights } from "../../../components/utils/booking";
 
 const PaymentPage = () => {
   const { token } = useSelector(selectUser);
+  const [isPayment, setIsPayment] = useState(false);
   const {
     data: bookings,
     isLoading,
@@ -50,6 +49,8 @@ const PaymentPage = () => {
   }
 
   const OrderSummary = ({ bookings }: { bookings: Booking[] }) => {
+    const [createPayment] = useCreatePaymentMutation();
+
     const totalPrice = bookings.reduce((acc, booking) => {
       const checkInDate = new Date(booking.checkIn).toISOString();
       const checkOutDate = new Date(booking.checkOut).toISOString();
@@ -57,6 +58,37 @@ const PaymentPage = () => {
 
       return acc + booking.property.price * numberOfNights;
     }, 0);
+
+    const handleConfirmOrder = () => {
+      bookings.forEach(async booking => {
+        try {
+          const checkInDate = new Date(booking.checkIn).toISOString();
+          const checkOutDate = new Date(booking.checkOut).toISOString();
+          const numberOfNights = calculateNumberOfNights(
+            checkInDate,
+            checkOutDate,
+          );
+          const amount = booking.property.price * numberOfNights;
+
+          const result = await createPayment({
+            token,
+            bookingId: booking.id,
+            amount,
+          });
+
+          if ("error" in result) {
+            console.log(result.error);
+            console.log("error");
+          }
+          if ("data" in result) {
+            console.log("success");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      alert("Payment success");
+    };
 
     return (
       <div className="col-span-4 text-gray-500 flex flex-col gap-5">
@@ -74,9 +106,22 @@ const PaymentPage = () => {
             <p>Total:</p>
             <p className="text-black">${totalPrice}</p>
           </div>
-          <button className="bg-accent w-full text-white py-3 rounded-lg uppercase">
-            Proceed to checkout
-          </button>
+          {!isPayment && (
+            <button
+              onClick={() => {
+                setIsPayment(true);
+              }}
+              className="bg-accent w-full text-white py-3 rounded-lg uppercase">
+              Proceed to checkout
+            </button>
+          )}
+          {isPayment && (
+            <button
+              onClick={handleConfirmOrder}
+              className="bg-green-600 w-full text-white py-3 rounded-lg uppercase">
+              Confirm the order
+            </button>
+          )}
         </div>
       </div>
     );
@@ -119,8 +164,13 @@ const PaymentPage = () => {
             {booking.property.name}
           </h2>
           <div>
-            <p>From: {convertDateToString(booking.checkIn)}</p>
-            <p>Until: {convertDateToString(booking.checkOut)}</p>
+            <p>
+              From:
+              {new Date(booking.checkIn).toISOString().split("T")[0]}
+            </p>
+            <p>
+              Until: {new Date(booking.checkOut).toISOString().split("T")[0]}
+            </p>
           </div>
           <div className="flex justify-between">
             <button
@@ -141,21 +191,32 @@ const PaymentPage = () => {
     item => item.payment === null,
   );
 
+  const PaymentCard = () => {
+    return (
+      <div className="mt-8 p-5 border border-blue-400 text-blue-400">
+        <p>I haven&apos;t implemented the payment method.</p>
+        <p>This page is only for demonstration</p>
+      </div>
+    );
+  };
+
   return (
-    <main className="bg-brown-200">
+    <main className="bg-brown-200 h-[90vh]">
       <div className="container mx-auto py-12 grid grid-cols-12 gap-5">
         <div className="bg-white rounded-lg col-span-8 h-fit py-10 px-5">
           <h1 className="font-primary text-4xl font-semibold text-center">
-            Shopping Cart
+            {!isPayment ? "Shopping Cart" : "Payment"}
           </h1>
           <div className="flex flex-col gap-5 mt-5">
             {bookingWithoutPayment.length === 0 && (
               <p className="mt-5">No item in cart..</p>
             )}
-            {bookingWithoutPayment.length > 0 &&
+            {!isPayment &&
+              bookingWithoutPayment.length > 0 &&
               bookingWithoutPayment.map(booking => {
                 return <OrderItem key={booking.id} booking={booking} />;
               })}
+            {isPayment && <PaymentCard />}
           </div>
         </div>
         <OrderSummary bookings={bookingWithoutPayment} />

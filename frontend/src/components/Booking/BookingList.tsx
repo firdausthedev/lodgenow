@@ -4,7 +4,21 @@ import { Booking } from "../../store/types";
 import BookingModal from "./BookingModal";
 
 const BookingList = ({ bookings }: { bookings: Booking[] }) => {
-  const [isModal, setIsModal] = useState(false);
+  const BookingButton = ({ bookingId }: { bookingId: string }) => {
+    const [isModal, setIsModal] = useState(false);
+    return (
+      <>
+        <button
+          className="bg-accent-200 text-sm text-white rounded-md px-4 py-1"
+          onClick={() => setIsModal(true)}>
+          View
+        </button>
+        {isModal && (
+          <BookingModal bookingId={bookingId} setIsModal={setIsModal} />
+        )}
+      </>
+    );
+  };
 
   const bookingWithPayment = bookings.filter(
     booking => booking.payment !== null,
@@ -52,17 +66,7 @@ const BookingList = ({ bookings }: { bookings: Booking[] }) => {
                 {booking.payment ? booking.payment.status : "PENDING"}
               </td>
               <td className="px-6 py-4">
-                <button
-                  className="bg-accent-200 text-sm text-white rounded-md px-4 py-1"
-                  onClick={() => setIsModal(true)}>
-                  View
-                </button>
-                {isModal && (
-                  <BookingModal
-                    bookingId={booking.id}
-                    setIsModal={setIsModal}
-                  />
-                )}
+                <BookingButton bookingId={booking.id} />
               </td>
             </tr>
           );

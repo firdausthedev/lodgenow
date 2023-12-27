@@ -15,15 +15,14 @@ interface BookingOrderModalProps {
 }
 
 const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
+  console.log(bookingId);
   const { token } = useSelector(selectUser);
   const navigateTo = useNavigate();
-
   const {
     data: booking,
     isLoading,
     isError,
   } = useGetOneBookingQuery([token, bookingId]);
-
   if (isLoading) {
     return createPortal(
       <div
@@ -162,11 +161,6 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
                   : "Pending"
               }
             />
-          </div>
-          <div className="mt-8">
-            <button className="uppercase text-red-600 underline w-fit">
-              Cancel the order
-            </button>
           </div>
         </div>
       </div>
