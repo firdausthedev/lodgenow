@@ -6,7 +6,11 @@ import BookingModal from "./BookingModal";
 const BookingList = ({ bookings }: { bookings: Booking[] }) => {
   const [isModal, setIsModal] = useState(false);
 
-  if (bookings.length === 0) {
+  const bookingWithPayment = bookings.filter(
+    booking => booking.payment !== null,
+  );
+
+  if (bookingWithPayment.length === 0) {
     return (
       <div>
         <p className="text-base font-secondary">You have no orders..</p>
@@ -36,7 +40,7 @@ const BookingList = ({ bookings }: { bookings: Booking[] }) => {
         </tr>
       </thead>
       <tbody className="font-secondary">
-        {bookings.map((booking, index) => {
+        {bookingWithPayment.map((booking, index) => {
           return (
             <tr
               key={booking.id}

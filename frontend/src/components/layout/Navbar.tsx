@@ -1,9 +1,10 @@
 import React from "react";
 import SearchInput from "./SearchInput";
-import { FaCartShopping } from "react-icons/fa6";
+
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserToken, selectUser } from "../../store/slices/userSlice";
 import { useLocation, useNavigate } from "react-router-dom";
+import Cart from "./Cart";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -27,11 +28,11 @@ const Navbar = () => {
     <nav className="p-5 bg-white border-b">
       <div className="container flex justify-between">
         <div className="flex gap-5 items-center">
-          <a href="/">
+          <button onClick={() => navigateTo("/")}>
             <h1 className="font-semibold text-2xl font-secondary text-accent">
               lodgenow
             </h1>
-          </a>
+          </button>
         </div>
         <SearchInputWrapper />
 
@@ -64,10 +65,7 @@ const Navbar = () => {
               </a>
             </div>
           )}
-
-          <button className="font-normal font-secondary" onClick={() => {}}>
-            <FaCartShopping className="text-accent" />
-          </button>
+          <Cart />
         </div>
       </div>
     </nav>

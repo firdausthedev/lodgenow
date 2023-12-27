@@ -13,6 +13,7 @@ import Register from "./pages/client/Register";
 import PropertyPage from "./pages/client/Property/Property";
 import Navbar from "./components/layout/Navbar";
 import BookingPage from "./pages/client/Booking/Booking";
+import PaymentPage from "./pages/client/Payment/Payment";
 
 const App = () => {
   const NavbarWrapper = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/property/:id" element={<PropertyPage />} />
           <Route path="/booking" element={<BookingPage />} />
+          <Route path="/cart" element={<PaymentPage />} />
         </Routes>
       </Router>
     </Provider>

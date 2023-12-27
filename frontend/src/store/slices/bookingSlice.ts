@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { calculateNumberOfNights } from "../../components/utils/booking";
 
 interface bookingState {
   checkInDate: string;
@@ -20,9 +21,11 @@ export const bookingSlice = createSlice({
   initialState,
   reducers: {
     setCheckInDate: (state, action) => {
-      const checkInDate = new Date(action.payload);
-      const checkOutDate = new Date(state.checkOutDate);
-      if (checkInDate.getTime() > checkOutDate.getTime()) {
+      const numberOfNights = calculateNumberOfNights(
+        action.payload,
+        state.checkOutDate,
+      );
+      if (numberOfNights < 1) {
         state.error = "Check-in date must be before check-out date";
       } else {
         state.error = "";
@@ -30,9 +33,11 @@ export const bookingSlice = createSlice({
       }
     },
     setCheckOutDate: (state, action) => {
-      const checkInDate = new Date(state.checkInDate);
-      const checkOutDate = new Date(action.payload);
-      if (checkOutDate.getTime() < checkInDate.getTime()) {
+      const numberOfNights = calculateNumberOfNights(
+        state.checkInDate,
+        action.payload,
+      );
+      if (numberOfNights < 1) {
         state.error = "Check-out date must be after check-in date";
       } else {
         state.error = "";

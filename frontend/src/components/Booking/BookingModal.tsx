@@ -7,6 +7,7 @@ import { useGetOneBookingQuery } from "../../store/api/bookingApi";
 
 import Spinner from "../layout/Spinner";
 import { useNavigate } from "react-router-dom";
+import { convertDateToString } from "../utils/booking";
 
 interface BookingOrderModalProps {
   bookingId: string;
@@ -103,16 +104,6 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
     return <p className="font-secondary text-sm ">{text}</p>;
   };
 
-  const convertDateToString = (date: Date) => {
-    const currentDate = new Date(date);
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
-    const day = currentDate.getDate().toString().padStart(2, "0");
-
-    const dateString = `${year}/${month}/${day}`;
-    return dateString;
-  };
-
   const checkIn = convertDateToString(booking.data.checkIn);
   const checkOut = convertDateToString(booking.data.checkOut);
 
@@ -154,7 +145,7 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
               <img
                 src={booking.data.property.photos[0]}
                 alt="product"
-                className="w-1/2 rounded object-cover"
+                className="w-1/2 h-36 rounded"
               />
               <div className="flex flex-col ">
                 <p className="font-primary font-medium text-lg">

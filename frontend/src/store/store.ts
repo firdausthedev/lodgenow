@@ -5,6 +5,7 @@ import property from "./slices/propertySlice";
 import search from "./slices/searchSlice";
 import user from "./slices/userSlice";
 import booking from "./slices/bookingSlice";
+import cart from "./slices/cartSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     property,
     user,
     booking,
+    cart,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: getDefaultMiddleware =>

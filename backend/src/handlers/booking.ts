@@ -15,9 +15,13 @@ export const getAllBookings = async (
       },
       select: {
         id: true,
+        checkIn: true,
+        checkOut: true,
         property: {
           select: {
             name: true,
+            photos: true,
+            price: true,
           },
         },
         payment: {
