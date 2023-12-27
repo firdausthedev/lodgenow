@@ -54,7 +54,7 @@ const PropertyList = ({
   if (isError || !data) {
     return (
       <div className="w-full h-40">
-        <p className="font-secondary text-base">
+        <p className="text-base">
           Error fetching data. Please try again later.
         </p>
       </div>
@@ -65,7 +65,7 @@ const PropertyList = ({
     if (searchTerm && searchResult.length === 0) {
       return (
         <div className="w-full h-40">
-          <p className="font-secondary text-base">No property found.</p>
+          <p className="text-base">No property found.</p>
         </div>
       );
     } else {

@@ -35,7 +35,7 @@ const PaymentPage = () => {
     if (error) {
       return (
         <main className="container mt-3">
-          <p className="font-secondary text-base">
+          <p className="text-base">
             Please login to your account to view your cart.
           </p>
         </main>
@@ -43,7 +43,7 @@ const PaymentPage = () => {
     } else {
       return (
         <main className="container mt-10 mx-auto flex justify-center">
-          <p className="font-secondary text-base">{SERVER_ERROR_MSG}</p>
+          <p className="text-base">{SERVER_ERROR_MSG}</p>
         </main>
       );
     }
@@ -65,12 +65,12 @@ const PaymentPage = () => {
         </h2>
         <div>
           <h3 className="font-primary font-medium text-lg">You are ordering</h3>
-          <p className="font-secondary font-light text-4xl text-black">
+          <p className="font-light text-4xl text-black">
             {bookings.length} item(s)
           </p>
         </div>
         <div className="mt-5 flex flex-col gap-3">
-          <div className="flex justify-between font-secondary text-lg">
+          <div className="flex justify-between text-lg">
             <p>Total:</p>
             <p className="text-black">${totalPrice}</p>
           </div>
@@ -118,17 +118,17 @@ const PaymentPage = () => {
           <h2 className="font-primary text-lg font-medium">
             {booking.property.name}
           </h2>
-          <div className="font-secondary">
+          <div>
             <p>From: {convertDateToString(booking.checkIn)}</p>
             <p>Until: {convertDateToString(booking.checkOut)}</p>
           </div>
           <div className="flex justify-between">
             <button
               onClick={handleDelete}
-              className="underline font-secondary text-red-500 uppercase">
+              className="underline text-red-500 uppercase">
               Remove
             </button>
-            <p className="font-secondary font-medium">
+            <p className="font-medium">
               {numberOfNights} night(s) x ${booking.property.price}
             </p>
           </div>
@@ -150,7 +150,7 @@ const PaymentPage = () => {
           </h1>
           <div className="flex flex-col gap-5 mt-5">
             {bookingWithoutPayment.length === 0 && (
-              <p className="font-secondary mt-5">No item in cart..</p>
+              <p className="mt-5">No item in cart..</p>
             )}
             {bookingWithoutPayment.length > 0 &&
               bookingWithoutPayment.map(booking => {

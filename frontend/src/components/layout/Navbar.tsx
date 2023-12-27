@@ -3,7 +3,7 @@ import SearchInput from "./SearchInput";
 
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserToken, selectUser } from "../../store/slices/userSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cart from "./Cart";
 
 const Navbar = () => {
@@ -39,30 +39,30 @@ const Navbar = () => {
         <div className="flex gap-2 items-center">
           {token && (
             <div className="flex gap-2">
-              <a
-                href="/booking"
-                className="font-normal font-secondary bg-accent-200 text-white py-1 px-3 rounded-md text-sm">
+              <Link
+                to="/booking"
+                className="font-normal bg-accent-200 text-white py-1 px-3 rounded-md text-sm">
                 Orders
-              </a>
+              </Link>
               <button
                 onClick={handleLogout}
-                className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
+                className="font-normal bg-accent text-white py-1 px-3 rounded-md text-sm">
                 Logout
               </button>
             </div>
           )}
           {!token && (
             <div className="flex gap-2">
-              <a
-                href="/signin"
-                className="font-normal font-secondary bg-accent text-white py-1 px-3 rounded-md text-sm">
+              <Link
+                to="/signin"
+                className="font-normal bg-accent text-white py-1 px-3 rounded-md text-sm">
                 Login
-              </a>
-              <a
-                href="/register"
-                className="font-normal font-secondary border border-accent text-accent  py-1 px-3 rounded-md text-sm">
+              </Link>
+              <Link
+                to="/register"
+                className="font-normal border border-accent text-accent  py-1 px-3 rounded-md text-sm">
                 Signup
-              </a>
+              </Link>
             </div>
           )}
           <Cart />

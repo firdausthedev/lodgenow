@@ -38,17 +38,15 @@ const PropertyCardDetails = ({
         </p>
         <div className="flex gap-1">
           {totalReviews >= 1 && <FaStar className="text-sm " />}
-          <p className="font-light text-base font-secondary leading-none break-words">
+          <p className="font-light text-base leading-none break-words">
             {totalReviews === 0
               ? ""
               : `${averageRatings.toPrecision(3)} (${totalReviews})`}
           </p>
         </div>
       </div>
-      <p className="font-secondary font-light text-base text-gray-600">
-        {property.location}
-      </p>
-      <p className="font-secondary font-semibold text-base mt-2">
+      <p className="font-light text-base text-gray-600">{property.location}</p>
+      <p className="font-semibold text-base mt-2">
         ${property.price} <span className="font-normal">night</span>
       </p>
     </div>

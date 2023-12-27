@@ -83,9 +83,7 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
             onClick={() => setIsModal(false)}>
             <FaXmark aria-hidden="true" className="text-black text-base" />
           </button>
-          <p className="font-secondary text-base">
-            Error fetching order. Please try again.
-          </p>
+          <p className="text-base">Error fetching order. Please try again.</p>
         </div>
       </div>,
       document.getElementById("modal") as HTMLElement,
@@ -94,14 +92,12 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
 
   const BookingTitle = ({ text }: { text: string }) => {
     return (
-      <p className="font-secondary text-lg font-medium text-gray-600 uppercase">
-        {text}
-      </p>
+      <p className="text-lg font-medium text-gray-600 uppercase">{text}</p>
     );
   };
 
   const BookingDesc = ({ text }: { text: string }) => {
-    return <p className="font-secondary text-sm ">{text}</p>;
+    return <p className="text-sm ">{text}</p>;
   };
 
   const checkIn = convertDateToString(booking.data.checkIn);
@@ -120,9 +116,7 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
           onClick={() => setIsModal(false)}>
           <FaXmark aria-hidden="true" className="text-black text-base" />
         </button>
-        <h2 className="font-primary text-3xl font-semibold text-center">
-          Order Details
-        </h2>
+        <h2 className="text-3xl font-semibold text-center">Order Details</h2>
         <div className="flex flex-col gap-2">
           <div>
             <BookingTitle text="Order Number" />
@@ -151,9 +145,9 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
                 <p className="font-primary font-medium text-lg">
                   {booking.data.property.name}
                 </p>
-                <p className="font-secondary text-sm">From: {checkIn}</p>
-                <p className="font-secondary text-sm">Until: {checkOut}</p>
-                <p className="font-secondary font-medium mt-2">
+                <p className="text-sm">From: {checkIn}</p>
+                <p className="text-sm">Until: {checkOut}</p>
+                <p className="font-medium mt-2">
                   {booking.data.payment && `$${booking.data.payment.amount}`}
                 </p>
               </div>
@@ -170,7 +164,7 @@ const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
             />
           </div>
           <div className="mt-8">
-            <button className="uppercase font-secondary text-red-600 underline w-fit">
+            <button className="uppercase text-red-600 underline w-fit">
               Cancel the order
             </button>
           </div>

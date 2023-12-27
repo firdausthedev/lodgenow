@@ -28,7 +28,7 @@ const BookingPage = () => {
     if (error) {
       return (
         <main className="container mt-3">
-          <p className="font-secondary text-base">
+          <p className="text-base">
             Please login to your account to view your orders.
           </p>
         </main>
@@ -36,7 +36,7 @@ const BookingPage = () => {
     } else {
       return (
         <main className="container mt-10 mx-auto flex justify-center">
-          <p className="font-secondary text-base">{SERVER_ERROR_MSG}</p>
+          <p className="text-base">{SERVER_ERROR_MSG}</p>
         </main>
       );
     }
@@ -44,7 +44,7 @@ const BookingPage = () => {
 
   return (
     <main className="container my-12">
-      <h1 className="font-primary text-3xl font-semibold">Order list</h1>
+      <h1 className="text-3xl font-semibold">Order list</h1>
       <BookingList bookings={booking.data} />
     </main>
   );

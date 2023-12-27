@@ -41,7 +41,7 @@ const AgentProfileCard = ({ data }: dataProps) => {
             <p className="font-bold text-3xl font-primary leading-none break-words">
               {data.data.totalReviews}
             </p>
-            <p className="font-secondary text-sm -mt-1">Reviews</p>
+            <p className="text-sm -mt-1">Reviews</p>
           </div>
           <hr />
         </div>
@@ -53,7 +53,7 @@ const AgentProfileCard = ({ data }: dataProps) => {
               </p>
               <FaStar className="text-sm" />
             </div>
-            <p className="font-secondary text-sm -mt-1">Rating</p>
+            <p className="text-sm -mt-1">Rating</p>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@ const AgentContactDetail = ({ data }: dataProps) => {
   return (
     <div className="flex gap-2 items-center text-gray-900 text-xs">
       <FaEnvelope className="text-base" />
-      <p className="font-secondary font-light break-words text-lg ">
+      <p className="font-light break-words text-lg ">
         Email me : {data.data.email}
       </p>
     </div>
@@ -77,7 +77,7 @@ const AgentListings = ({ data }: dataProps) => {
   const numberOfProperties = data.data.properties.length;
   return (
     <div>
-      <h2 className="font-primary text-lg">{data.data.name}&apos;s listings</h2>
+      <h2 className="text-lg">{data.data.name}&apos;s listings</h2>
       <div className="flex gap-2 w-full">
         {data.data.properties
           .slice(0, maxPropertiesToShow)
@@ -122,12 +122,12 @@ const AgentProperties = ({
         </p>
         <div className="flex gap-1">
           <FaStar className="text-xs" />
-          <p className="font-light text-sm font-secondary leading-none  break-words">
+          <p className="font-light text-sm leading-none  break-words">
             {property.averageRating}
           </p>
         </div>
       </div>
-      <p className="font-secondary font-light text-sm leading-none text-gray-700">
+      <p className="font-light text-sm leading-none text-gray-700">
         {property.location}
       </p>
     </div>
@@ -177,7 +177,7 @@ const AgentModal = ({ agentId, setIsModal }: AgentModalProps) => {
             <FaXmark aria-hidden="true" className="text-black text-base" />
           </button>
           <div>
-            <p className="font-secondary text-base">
+            <p className="text-base">
               Error fetching agent. Please try again later.
             </p>
           </div>

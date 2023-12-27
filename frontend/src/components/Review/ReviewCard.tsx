@@ -30,12 +30,12 @@ const ReviewCard = ({ review }: { review: Review }) => {
           {usernFirstChar}
         </div>
         <div className="flex items-center">
-          <p className="font-secondary">{review.user.username}</p>
+          <p>{review.user.username}</p>
         </div>
       </div>
       <div className="flex flex-col gap-2">
         <StarRating numberOfStars={review.rating} />
-        <p className="font-secondary">{review.comment}</p>
+        <p>{review.comment}</p>
       </div>
     </div>
   );

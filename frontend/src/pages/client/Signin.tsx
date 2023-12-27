@@ -4,7 +4,7 @@ import {
   postUserResponse,
   usePostUserSignInQuery,
 } from "../../store/api/userApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../../store/slices/userSlice";
 import { SERVER_ERROR_MSG } from "../../components/utils/constants";
@@ -79,12 +79,12 @@ const Signin = () => {
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">
-        <a
-          className="text-center font-bold text-3xl font-primary inline-block w-full"
-          href="/">
+        <Link
+          className="text-center font-bold text-3xl font-primary inline-block w-full text-accent"
+          to="/">
           lodgenow
-        </a>
-        <h1 className="text-lg font-primary font-bold">Signin</h1>
+        </Link>
+        <h1 className="text-lg font-primary font-bold mt-7">Signin</h1>
         <form onSubmit={handleFormSubmit}>
           <div className="flex flex-col gap-3 mt-1">
             <div>
@@ -97,7 +97,7 @@ const Signin = () => {
                 </label>
               </div>
               <input
-                className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-sans"
+                className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-secondary"
                 id="username"
                 name="username"
                 type="text"
@@ -118,7 +118,7 @@ const Signin = () => {
                 <p className="helper-password text-red-500 inline text-base font-medium"></p>
               </div>
               <input
-                className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-sans"
+                className="appearance-none border border-gray-300 rounded-md w-full p-3 text-gray-600 leading-tight focus:outline-purplish-blue font-medium font-secondary"
                 id="password"
                 type="password"
                 name="password"
@@ -130,11 +130,11 @@ const Signin = () => {
             </div>
           </div>
 
-          <p className=" text-red-500  text-base font-medium font-secondary text-center mt-3">
+          <p className=" text-red-500  text-base font-medium text-center mt-3">
             {errorMsg}
           </p>
           <button
-            className="bg-black text-white p-2 mt-5 rounded-lg flex justify-center font-secondary w-full"
+            className="bg-black text-white p-2 mt-5 rounded-lg flex justify-center w-full"
             disabled={isLoading}
             type="submit">
             Submit

@@ -6,4 +6,19 @@
   .container {
     @apply mx-auto px-[15px] max-w-[1220px] lg:max-w-[720px] md:max-w-[540px];
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-primary;
+  }
+
+  p,
+  span,
+  button,
+  a {
+    @apply font-secondary;
+  }
 }

@@ -36,7 +36,7 @@ const SearchInput = () => {
         <button
           type="button"
           onClick={handleClearSearch}
-          className="text-white rounded-lg absolute right-2.5 top-3 px-2 py-1 bg-accent-200 font-normal text-xs font-secondary outline-accent-600">
+          className="text-white rounded-lg absolute right-2.5 top-3 px-2 py-1 bg-accent-200 font-normal text-xs outline-accent-600">
           Clear
         </button>
       )}

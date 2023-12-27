@@ -13,7 +13,7 @@ const BookingList = ({ bookings }: { bookings: Booking[] }) => {
   if (bookingWithPayment.length === 0) {
     return (
       <div>
-        <p className="text-base font-secondary">You have no orders..</p>
+        <p className="text-base">You have no orders..</p>
       </div>
     );
   }

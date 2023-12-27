@@ -21,7 +21,7 @@ const SideNav = ({ type, setType, setCurrentPage }) => {
     return (
       <li>
         <button
-          className={`font-secondary w-full text-start rounded-lg p-2 text-sm border capitalize text-gray-500 font-medium ${
+          className={`w-full text-start rounded-lg p-2 text-sm border capitalize text-gray-500 font-medium ${
             currentType === type && "bg-accent text-white"
           } `}
           onClick={handleClick}>
