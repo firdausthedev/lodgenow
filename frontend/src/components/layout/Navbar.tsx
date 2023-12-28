@@ -2,7 +2,7 @@ import React from "react";
 import SearchInput from "./SearchInput";
 
 import { useSelector, useDispatch } from "react-redux";
-import { clearUserToken, selectUser } from "../../store/slices/userSlice";
+import { logout, selectUser } from "../../store/slices/userSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cart from "./Cart";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigateTo = useNavigate();
 
   const handleLogout = () => {
-    dispatch(clearUserToken());
+    dispatch(logout());
     navigateTo("/");
   };
 

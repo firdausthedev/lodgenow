@@ -1,30 +1,61 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getToken, clearToken, setToken } from "../../components/utils/auth";
+
+const clearUserLocalStorage = () => {
+  const storedData = localStorage.getItem("lodgenow");
+
+  if (storedData) {
+    const parsedData = JSON.parse(storedData);
+    delete parsedData.token;
+    delete parsedData.role;
+    localStorage.setItem("lodgenow", JSON.stringify(parsedData));
+  }
+};
+
+export const getValueFromLocalStorage = (key: string): string | null => {
+  const storedData = localStorage.getItem("lodgenow");
+
+  if (storedData) {
+    const parsedData = JSON.parse(storedData);
+    return parsedData[key] || null;
+  } else {
+    return null;
+  }
+};
 
 interface UserState {
   token: string | null;
+  role: string | null;
 }
 
 const initialState: UserState = {
-  token: getToken(),
+  token: getValueFromLocalStorage("token"),
+  role: getValueFromLocalStorage("role"),
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserToken: (state, action) => {
-      state.token = action.payload;
-      setToken(action.payload);
+    setUser: (state, action) => {
+      state.token = action.payload.token;
+      state.role = action.payload.role;
+      localStorage.setItem(
+        "lodgenow",
+        JSON.stringify({
+          token: action.payload.token,
+          role: action.payload.role,
+        }),
+      );
     },
-    clearUserToken: state => {
+    logout: state => {
       state.token = null;
-      clearToken();
+      state.role = null;
+      clearUserLocalStorage();
     },
   },
 });
 
-export const { setUserToken, clearUserToken } = userSlice.actions;
+export const { setUser, logout } = userSlice.actions;
 
 export default userSlice.reducer;
 

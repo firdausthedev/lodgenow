@@ -14,12 +14,18 @@ import PropertyPage from "./pages/client/Property/Property";
 import Navbar from "./components/layout/Navbar";
 import BookingPage from "./pages/client/Booking/Booking";
 import PaymentPage from "./pages/client/Payment/Payment";
+import AdminLayout from "./components/Admin/AdminLayout";
+import SignInAdmin from "./pages/admin/Signin";
+import ProtectedRoute from "./components/utils/ProtectedRoutes";
+import Dashboard from "./pages/admin/Dashboard";
 
 const App = () => {
   const NavbarWrapper = () => {
     const location = useLocation();
     const hiddenNavbarPaths = ["/signin", "/register"];
-    const isNavbarHidden = hiddenNavbarPaths.includes(location.pathname);
+    const isNavbarHidden =
+      hiddenNavbarPaths.includes(location.pathname) ||
+      location.pathname.startsWith("/admin");
 
     return !isNavbarHidden && <Navbar />;
   };
@@ -35,6 +41,22 @@ const App = () => {
           <Route path="/property/:id" element={<PropertyPage />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/cart" element={<PaymentPage />} />
+          <Route
+            path="/admin/*"
+            element={
+              <AdminLayout>
+                <Routes>
+                  <Route path="/" element={<SignInAdmin />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute roles={["admin"]} element={Dashboard} />
+                    }
+                  />
+                </Routes>
+              </AdminLayout>
+            }
+          />
         </Routes>
       </Router>
     </Provider>

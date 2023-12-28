@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { useFormChange } from "../../components/utils/hook";
-import { useSignInUserMutation } from "../../store/api/userApi";
+import { useSignInAdminMutation } from "../../store/api/adminApi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/slices/userSlice";
@@ -23,41 +23,35 @@ const Signin = () => {
     password: "",
   });
 
-  const [signin] = useSignInUserMutation();
+  const [signin] = useSignInAdminMutation();
 
   const [errMsg, setErrMsg] = useState("");
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const username = values.username;
-      const password = values.password;
-      const result = await signin({ username, password });
+    const username = values.username;
+    const password = values.password;
+    const result = await signin({ username, password });
 
-      if ("error" in result) {
-        const errorResponse = result.error as ErrorResponse;
-        setErrMsg(errorResponse.data.message);
-      }
+    if ("error" in result) {
+      const errorResponse = result.error as ErrorResponse;
+      setErrMsg(errorResponse.data.message);
+    }
 
-      if ("data" in result) {
-        if (result.data.success) {
-          dispatch(setUser({ token: result.data.token, role: "user" }));
-          navigateTo("/");
-        } else {
-          setErrMsg(SERVER_ERROR_MSG);
-        }
-      }
-    } catch (error) {
-      setErrMsg(SERVER_ERROR_MSG);
+    if ("data" in result) {
+      dispatch(setUser({ token: result.data.token, role: "admin" }));
+      navigateTo("./dashboard");
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">
         <Link
           className="text-center font-bold text-3xl font-primary inline-block w-full text-accent"
-          to="/">
+          to="/admin">
           lodgenow
         </Link>
         <h1 className="text-lg font-primary font-bold mt-7">Signin</h1>

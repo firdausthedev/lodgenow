@@ -15,7 +15,6 @@ interface BookingOrderModalProps {
 }
 
 const BookingModal = ({ setIsModal, bookingId }: BookingOrderModalProps) => {
-  console.log(bookingId);
   const { token } = useSelector(selectUser);
   const navigateTo = useNavigate();
   const {

@@ -9,7 +9,7 @@ export interface postUserResponse {
 
 const userApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    postUserSignIn: build.query({
+    signInUser: build.mutation({
       query: ({ username, password }) => ({
         url: `user/signin`,
         method: "POST",
@@ -20,7 +20,7 @@ const userApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: postUserResponse) => response,
     }),
-    createUser: build.query({
+    createUser: build.mutation({
       query: ({ username, password }) => ({
         url: `user`,
         method: "POST",
@@ -35,4 +35,4 @@ const userApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { usePostUserSignInQuery, useCreateUserQuery } = userApi;
+export const { useSignInUserMutation, useCreateUserMutation } = userApi;

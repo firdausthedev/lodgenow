@@ -75,16 +75,8 @@ const PaymentPage = () => {
             bookingId: booking.id,
             amount,
           });
-
-          if ("error" in result) {
-            console.log(result.error);
-            console.log("error");
-          }
-          if ("data" in result) {
-            console.log("success");
-          }
         } catch (error) {
-          console.log(error);
+          alert({ SERVER_ERROR_MSG });
         }
       });
       alert("Payment success");
@@ -140,16 +132,12 @@ const PaymentPage = () => {
           token,
           bookingId: booking.id,
         });
-        if ("error" in result) {
-          console.log("error");
-        }
 
         if ("data" in result) {
-          console.log("success");
           refetch();
         }
       } catch (error) {
-        console.log(error);
+        alert({ SERVER_ERROR_MSG });
       }
     };
 

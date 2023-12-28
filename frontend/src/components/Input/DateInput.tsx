@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectBooking,
@@ -14,6 +14,16 @@ const DateInput = () => {
   minTommorow.setDate(minTommorow.getDate() + 1);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      const tommorow = new Date();
+      tommorow.setDate(tommorow.getDate() + 1);
+      dispatch(setCheckInDate(new Date().toISOString()));
+      dispatch(setCheckOutDate(tommorow.toISOString()));
+    };
+  }, [dispatch]);
+
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     isCheckIn: boolean,

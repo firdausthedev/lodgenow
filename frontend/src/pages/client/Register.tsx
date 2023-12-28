@@ -1,9 +1,9 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import { useFormChange } from "../../components/utils/hook";
-import { postUserResponse, useCreateUserQuery } from "../../store/api/userApi";
+import { useCreateUserMutation } from "../../store/api/userApi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserToken } from "../../store/slices/userSlice";
+import { setUser } from "../../store/slices/userSlice";
 import { SERVER_ERROR_MSG } from "../../components/utils/constants";
 
 interface ErrorResponse {
@@ -33,63 +33,43 @@ const Register = () => {
     password: "",
   });
 
-  const [isFormSubmit, setIsFormSubmit] = useState(false);
-
-  const { data, error, isLoading, isError, isSuccess } = useCreateUserQuery(
-    {
-      username: values.username,
-      password: values.password,
-    },
-    { skip: isFormSubmit === false },
-  );
+  const [createUser] = useCreateUserMutation();
 
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsFormSubmit(true);
-  };
+    try {
+      const username = values.username;
+      const password = values.password;
+      const result = await createUser({ username, password });
 
-  useEffect(() => {
-    const handleRegister = (data: postUserResponse) => {
-      resetValues();
-      setErrorMsg("");
-      setIsFormSubmit(false);
-      dispatch(setUserToken(data.token));
-      navigateTo("/");
-    };
+      if ("error" in result) {
+        const errorResponse = result.error as ErrorResponse;
+        if (errorResponse.data.errors) {
+          setErrorMsg(errorResponse.data.errors[0].msg);
+        } else {
+          if (errorResponse.data.errCode === "P2002") {
+            setErrorMsg("username already taken");
+          } else {
+            setErrorMsg(SERVER_ERROR_MSG);
+          }
+        }
+      }
 
-    if (isError) {
-      const errorResponse = error as ErrorResponse;
-      if (errorResponse.data.errors) {
-        setErrorMsg(errorResponse.data.errors[0].msg);
-      } else {
-        if (errorResponse.data.errCode === "P2002") {
-          setErrorMsg("username already taken");
+      if ("data" in result) {
+        if (result.data.success) {
+          dispatch(setUser({ token: result.data.token, role: "user" }));
+          navigateTo("/");
         } else {
           setErrorMsg(SERVER_ERROR_MSG);
         }
       }
-      setIsFormSubmit(false);
+    } catch (error) {
+      setErrorMsg(SERVER_ERROR_MSG);
     }
+  };
 
-    if (isSuccess) {
-      if (data.success) {
-        handleRegister(data);
-      } else {
-        setErrorMsg(SERVER_ERROR_MSG);
-      }
-    }
-  }, [
-    isError,
-    error,
-    isLoading,
-    isSuccess,
-    resetValues,
-    data,
-    navigateTo,
-    dispatch,
-  ]);
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">

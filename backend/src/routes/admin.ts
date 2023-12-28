@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { handleInputErrors } from "../middlewares/handleInputsErrors";
 import { body, checkExact } from "express-validator";
-import { signin } from "../handlers/admin";
+import { getDashboard, signin } from "../handlers/admin";
 import { getAllBookingsAdmin } from "../handlers/booking";
 import { protectedAdmin } from "../utils/auth";
 import { getAllPaymentsAdmin } from "../handlers/payment";
@@ -136,5 +136,12 @@ router.put(
  * @access  Private
  */
 router.delete("/agent/:id", protectedAdmin, deleteAgent);
+
+/**
+ * @feature admin dashboard
+ * @route   GET /api/admin/dashboard/
+ * @access  Private
+ */
+router.get("/dashboard", protectedAdmin, getDashboard);
 
 export default router;
