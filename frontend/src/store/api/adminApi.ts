@@ -1,3 +1,4 @@
+import { Agent } from "http";
 import { Property } from "../types";
 import { baseApi } from "./baseApi";
 
@@ -127,6 +128,93 @@ const userApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: getAllUserResponse) => response.data,
     }),
+    createPropertyAdmin: build.mutation({
+      query: ({
+        token,
+        name,
+        location,
+        price,
+        bedrooms,
+        bathrooms,
+        photos,
+        type,
+        agentId,
+      }) => ({
+        url: `admin/property`,
+        method: "POST",
+        body: {
+          name,
+          location,
+          price,
+          bedrooms,
+          bathrooms,
+          photos,
+          type,
+          agentId,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: { success: boolean; data: Property }) =>
+        response.data,
+    }),
+    updatePropertyAdmin: build.mutation({
+      query: ({
+        token,
+        id,
+        name,
+        location,
+        price,
+        bedrooms,
+        bathrooms,
+        photos,
+        type,
+        agentId,
+      }) => ({
+        url: `admin/property/${id}`,
+        method: "PUT",
+        body: {
+          name,
+          location,
+          price,
+          bedrooms,
+          bathrooms,
+          photos,
+          type,
+          agentId,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: { success: boolean; data: Property }) =>
+        response.data,
+    }),
+    createAgent: build.mutation({
+      query: ({ token, name, email, photo }) => ({
+        url: `admin/agent`,
+        method: "POST",
+        body: {
+          name,
+          email,
+          photo,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: { success: boolean; data: Agent }) =>
+        response.data,
+    }),
+    updateAgent: build.mutation({
+      query: ({ token, id, name, email, photo }) => ({
+        url: `admin/agent/${id}`,
+        method: "PUT",
+        body: {
+          name,
+          email,
+          photo,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      transformResponse: (response: { success: boolean; data: Agent }) =>
+        response.data,
+    }),
   }),
   overrideExisting: false,
 });
@@ -138,4 +226,8 @@ export const {
   useGetAllBookingAdminQuery,
   useGetAllPaymentAdminQuery,
   useGetAllUserAdminQuery,
+  useCreatePropertyAdminMutation,
+  useUpdatePropertyAdminMutation,
+  useCreateAgentMutation,
+  useUpdateAgentMutation,
 } = userApi;

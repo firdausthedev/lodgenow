@@ -25,6 +25,9 @@ import PaymentPageAdmin from "./pages/admin/Payment/PaymentPage";
 import ReviewPageAdmin from "./pages/admin/Review/ReviewPage";
 import UserPageAdmin from "./pages/admin/User/UserPage";
 import PropertyAddForm from "./pages/admin/Property/PropertyAddForm";
+import PropertyEditForm from "./pages/admin/Property/PropertyEditForm";
+import AgentAddForm from "./pages/admin/Agent/AgentAddForm";
+import AgentEditForm from "./pages/admin/Agent/AgentEditForm";
 
 const App = () => {
   const NavbarWrapper = () => {
@@ -120,6 +123,33 @@ const App = () => {
                       <ProtectedRoute
                         roles={["admin"]}
                         element={PropertyAddForm}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/agent/add"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={AgentAddForm}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/property/edit/:id"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={PropertyEditForm}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/agent/edit/:id"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={AgentEditForm}
                       />
                     }
                   />

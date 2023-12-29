@@ -11,7 +11,9 @@ import { useNavigate } from "react-router-dom";
 const PropertyPageAdmin = () => {
   const { token } = useSelector(selectUser);
   const navigateTo = useNavigate();
-  const { data, isLoading, isError } = useGetAllPropertyAdminQuery(token);
+  const { data, isLoading, isError } = useGetAllPropertyAdminQuery(token, {
+    refetchOnMountOrArgChange: true,
+  });
 
   if (isLoading) {
     return (
@@ -32,6 +34,9 @@ const PropertyPageAdmin = () => {
   const ItemList = ({ items }: { items: Property[] }) => {
     const handleView = (propertyId: string) => {
       navigateTo(`/property/${propertyId}`);
+    };
+    const handleEdit = (propertyId: string) => {
+      navigateTo(`./edit/${propertyId}`);
     };
     return items.map((item, index) => {
       return (
@@ -54,7 +59,9 @@ const PropertyPageAdmin = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
               <FaEye />
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded-md text-sm">
+            <button
+              onClick={() => handleEdit(item.id)}
+              className="bg-green-500 text-white px-4 py-2 rounded-md text-sm">
               <FaPenToSquare />
             </button>
           </td>

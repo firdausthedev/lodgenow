@@ -65,12 +65,20 @@ router.get("/property", protectedAdmin, getAllPropertyAdmin);
 router.post(
   "/property",
   protectedAdmin,
-  body("name").isString().isLength({ min: 5, max: 255 }),
-  body("location").isString().isLength({ min: 5, max: 255 }),
-  body("price").isFloat({ min: 1 }),
+  body("name")
+    .isString()
+    .isLength({ min: 5, max: 255 })
+    .withMessage("Name must be atleast 5 characters"),
+  body("location")
+    .isString()
+    .isLength({ min: 5, max: 255 })
+    .withMessage("Location must be atleast 5 characters"),
+  body("price").isFloat({ min: 1 }).withMessage("Price must be greater than 1"),
   body("bedrooms").isInt({ min: 0 }),
   body("bathrooms").isInt({ min: 0 }),
-  body("photos").isArray({ min: 1, max: 5 }),
+  body("photos")
+    .isArray({ min: 1, max: 5 })
+    .withMessage("photos must be between 1 and 5"),
   body("type").isIn(["CITY", "RURAL", "MOUNTAIN", "TROPICAL"]),
   body("agentId").isString(),
   handleInputErrors,
@@ -86,12 +94,22 @@ router.put(
   "/property/:id",
   protectedAdmin,
   checkExact([
-    body("name").isString().isLength({ min: 5, max: 255 }),
-    body("location").isString().isLength({ min: 5, max: 255 }),
-    body("price").isFloat({ min: 1 }),
+    body("name")
+      .isString()
+      .isLength({ min: 5, max: 255 })
+      .withMessage("Name must be atleast 5 characters"),
+    body("location")
+      .isString()
+      .isLength({ min: 5, max: 255 })
+      .withMessage("Location must be atleast 5 characters"),
+    body("price")
+      .isFloat({ min: 1 })
+      .withMessage("Price must be greater than 1"),
     body("bedrooms").isInt({ min: 0 }),
     body("bathrooms").isInt({ min: 0 }),
-    body("photos").isArray({ min: 1, max: 5 }),
+    body("photos")
+      .isArray({ min: 1, max: 5 })
+      .withMessage("photos must be between 1 and 5"),
     body("type").isIn(["CITY", "RURAL", "MOUNTAIN", "TROPICAL"]),
     body("agentId").isString(),
   ]),
@@ -115,8 +133,8 @@ router.post(
   "/agent",
   protectedAdmin,
   body("name").isString(),
-  body("email").isString().isEmail(),
-  body("photo").isString().isURL(),
+  body("email").isString().isEmail().withMessage("Email must be a valid email"),
+  body("photo").isString().isURL().withMessage("Photo must be a valid URL"),
   handleInputErrors,
   createAgent,
 );

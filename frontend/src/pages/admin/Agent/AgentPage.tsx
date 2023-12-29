@@ -4,10 +4,14 @@ import { SERVER_ERROR_MSG } from "../../../components/utils/constants";
 import { Agent } from "../../../store/types";
 import { FaPenToSquare } from "react-icons/fa6";
 import { useGetAllAgentQuery } from "../../../store/api/agentApi";
+import { useNavigate } from "react-router-dom";
 
 const AgentPageAdmin = () => {
-  const { data, isLoading, isError } = useGetAllAgentQuery({});
-  console.log(data);
+  const navigateTo = useNavigate();
+  const { data, isLoading, isError } = useGetAllAgentQuery(
+    {},
+    { refetchOnMountOrArgChange: true },
+  );
 
   if (isLoading) {
     return (
@@ -26,6 +30,9 @@ const AgentPageAdmin = () => {
   }
 
   const ItemList = ({ items }: { items: Agent[] }) => {
+    const handleEdit = (agentId: string) => {
+      navigateTo(`./edit/${agentId}`);
+    };
     return items.map((item, index) => {
       return (
         <tr key={item.id} className="odd:bg-white even:bg-gray-50 border-b">
@@ -39,9 +46,12 @@ const AgentPageAdmin = () => {
             />
           </td>
           <td className="px-6 py-4">{item.name}</td>
+          <td className="px-6 py-4">{item.id}</td>
           <td className="px-6 py-4">{item.email}</td>
           <td className="px-6 py-4 flex gap-3">
-            <button className="bg-green-500 text-white px-4 py-2 rounded-md text-sm">
+            <button
+              onClick={() => handleEdit(item.id)}
+              className="bg-green-500 text-white px-4 py-2 rounded-md text-sm">
               <FaPenToSquare />
             </button>
           </td>
@@ -54,7 +64,11 @@ const AgentPageAdmin = () => {
     <main className="bg-brown-200 min-h-screen py-12 px-10">
       <div className="bg-white rounded-lg p-5">
         <h1 className="text-xl font-medium uppercase">Agent List</h1>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+        <button
+          onClick={() => {
+            navigateTo("./add");
+          }}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
           Add
         </button>
         <table className="min-w-full text-left rtl:text-right mt-6">
@@ -68,6 +82,9 @@ const AgentPageAdmin = () => {
               </th>
               <th scope="col" className="px-6 py-3">
                 NAME
+              </th>
+              <th scope="col" className="px-6 py-3">
+                ID
               </th>
               <th scope="col" className="px-6 py-3">
                 EMAIL

@@ -15,7 +15,9 @@ import { SERVER_ERROR_MSG } from "../../components/utils/constants";
 
 const Dashboard = () => {
   const { token } = useSelector(selectUser);
-  const { data, isLoading, isError } = useGetDashboardQuery(token);
+  const { data, isLoading, isError } = useGetDashboardQuery(token, {
+    refetchOnMountOrArgChange: true,
+  });
 
   if (isLoading) {
     return (

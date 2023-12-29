@@ -97,7 +97,11 @@ const Register = () => {
                 type="text"
                 autoComplete="off"
                 placeholder="Please enter your username here"
-                value={values.username.replace(/\s/g, "")}
+                value={
+                  typeof values.username === "string"
+                    ? values.username.replace(/\s/g, "")
+                    : values.username
+                }
                 onChange={handleChange}
               />
             </div>

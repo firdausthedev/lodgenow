@@ -30,5 +30,6 @@ export const useFormChange = (initialValues: FormChangeProps) => {
     resetValues,
     changed,
     resetChanged,
+    setValues,
   };
 };
