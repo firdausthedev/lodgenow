@@ -260,15 +260,8 @@ export const getAllPropertyAdmin = async (
 ) => {
   try {
     const properties = await prisma.property.findMany({
-      include: {
-        agent: true,
-        reviews: true,
-        bookings: {
-          include: {
-            user: { select: { username: true, id: true } },
-            payment: true,
-          },
-        },
+      orderBy: {
+        type: "asc",
       },
     });
     res.json({ data: properties, success: true });

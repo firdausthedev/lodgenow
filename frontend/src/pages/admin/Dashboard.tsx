@@ -16,6 +16,7 @@ import { SERVER_ERROR_MSG } from "../../components/utils/constants";
 const Dashboard = () => {
   const { token } = useSelector(selectUser);
   const { data, isLoading, isError } = useGetDashboardQuery(token);
+
   if (isLoading) {
     return (
       <main className="min-h-screen py-12 px-10 bg-brown-200 flex justify-center items-start">
@@ -35,8 +36,8 @@ const Dashboard = () => {
   const DashboardItem = ({ icon, title, length, to }) => {
     return (
       <Link
-        to={`./${to}`}
-        className="p-5 bg-white rounded-lg text-2xl flex justify-between">
+        to={`../${to}`}
+        className="p-5 bg-white rounded-lg text-2xl flex justify-between shadow-sm">
         <div className="flex items-center gap-3">
           {icon}
           {title}

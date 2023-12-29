@@ -12,6 +12,18 @@ export const getAllReviews = async (
       orderBy: {
         createdAt: "asc",
       },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
+        property: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     res.json({ data: reviews, success: true });
   } catch (error) {
@@ -50,7 +62,8 @@ export const createReview = async (
     });
 
     if (!booking) {
-      return res.status(400).json({
+      res.status(400);
+      return res.json({
         message: "Booking does not exist",
         success: false,
       });
@@ -64,7 +77,8 @@ export const createReview = async (
     });
 
     if (!payment) {
-      return res.status(400).json({
+      res.status(400);
+      return res.json({
         message: "Payment is not completed",
         success: false,
       });

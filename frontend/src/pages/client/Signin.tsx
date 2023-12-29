@@ -18,7 +18,7 @@ const Signin = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
-  const { values, handleChange, resetValues } = useFormChange({
+  const { values, handleChange } = useFormChange({
     username: "",
     password: "",
   });

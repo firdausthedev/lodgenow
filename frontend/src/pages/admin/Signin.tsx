@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import { useFormChange } from "../../components/utils/hook";
 import { useSignInAdminMutation } from "../../store/api/adminApi";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const Signin = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
-  const { values, handleChange, resetValues } = useFormChange({
+  const { values, handleChange } = useFormChange({
     username: "",
     password: "",
   });
@@ -29,29 +29,31 @@ const Signin = () => {
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const username = values.username;
-    const password = values.password;
-    const result = await signin({ username, password });
+    try {
+      const username = values.username;
+      const password = values.password;
+      const result = await signin({ username, password });
 
-    if ("error" in result) {
-      const errorResponse = result.error as ErrorResponse;
-      setErrMsg(errorResponse.data.message);
-    }
+      if ("error" in result) {
+        const errorResponse = result.error as ErrorResponse;
+        setErrMsg(errorResponse.data.message);
+      }
 
-    if ("data" in result) {
-      dispatch(setUser({ token: result.data.token, role: "admin" }));
-      navigateTo("./dashboard");
+      if ("data" in result) {
+        dispatch(setUser({ token: result.data.token, role: "admin" }));
+        navigateTo("./dashboard");
+      }
+    } catch (error) {
+      setErrMsg(SERVER_ERROR_MSG);
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <main className="bg-slate-200 h-screen flex justify-center items-center">
       <div className="w-[400px] mx-auto bg-white rounded-lg p-4 flex flex-col">
         <Link
           className="text-center font-bold text-3xl font-primary inline-block w-full text-accent"
-          to="/admin">
+          to="/">
           lodgenow
         </Link>
         <h1 className="text-lg font-primary font-bold mt-7">Signin</h1>

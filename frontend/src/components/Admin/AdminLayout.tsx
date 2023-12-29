@@ -5,7 +5,7 @@ import AdminNavbar from "./AdminNavBar";
 const AdminLayout = ({ children }) => {
   const NavbarWrapper = () => {
     const location = useLocation();
-    const hiddenNavbarPaths = ["/admin"];
+    const hiddenNavbarPaths = ["/admin", "/admin/"];
     const isNavbarHidden = hiddenNavbarPaths.includes(location.pathname);
 
     return !isNavbarHidden && <AdminNavbar />;

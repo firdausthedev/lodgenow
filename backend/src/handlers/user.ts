@@ -65,7 +65,7 @@ export const signin = async (
   }
 };
 
-export const getAllUsers = async (
+export const getAllUsersAdmin = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -75,12 +75,10 @@ export const getAllUsers = async (
       select: {
         username: true,
         id: true,
-        bookings: true,
-        Review: true,
       },
     });
 
-    res.json({ message: users, success: true });
+    res.json({ data: users, success: true });
   } catch (error) {
     next(error);
   }

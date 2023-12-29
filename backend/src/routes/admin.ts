@@ -12,6 +12,7 @@ import {
   updateProperty,
 } from "../handlers/property";
 import { createAgent, deleteAgent, updateAgent } from "../handlers/agent";
+import { getAllUsersAdmin } from "../handlers/user";
 
 const router = Router();
 
@@ -27,6 +28,13 @@ router.post(
   handleInputErrors,
   signin,
 );
+
+/**
+ * @feature admin get all users
+ * @route   GET /api/admin/user
+ * @access  Private
+ */
+router.get("/user", protectedAdmin, getAllUsersAdmin);
 
 /**
  * @feature admin get all bookings

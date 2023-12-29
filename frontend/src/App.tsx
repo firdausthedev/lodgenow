@@ -18,6 +18,13 @@ import AdminLayout from "./components/Admin/AdminLayout";
 import SignInAdmin from "./pages/admin/Signin";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import Dashboard from "./pages/admin/Dashboard";
+import PropertyPageAdmin from "./pages/admin/Property/PropertyPage";
+import AgentPageAdmin from "./pages/admin/Agent/AgentPage";
+import BookingPageAdmin from "./pages/admin/Booking/BookingPage";
+import PaymentPageAdmin from "./pages/admin/Payment/PaymentPage";
+import ReviewPageAdmin from "./pages/admin/Review/ReviewPage";
+import UserPageAdmin from "./pages/admin/User/UserPage";
+import PropertyAddForm from "./pages/admin/Property/PropertyAddForm";
 
 const App = () => {
   const NavbarWrapper = () => {
@@ -51,6 +58,69 @@ const App = () => {
                     path="/dashboard"
                     element={
                       <ProtectedRoute roles={["admin"]} element={Dashboard} />
+                    }
+                  />
+                  <Route
+                    path="/property"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={PropertyPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/agent"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={AgentPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/booking"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={BookingPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/payment"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={PaymentPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/review"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={ReviewPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/user"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={UserPageAdmin}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/property/add"
+                    element={
+                      <ProtectedRoute
+                        roles={["admin"]}
+                        element={PropertyAddForm}
+                      />
                     }
                   />
                 </Routes>

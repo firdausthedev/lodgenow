@@ -8,7 +8,7 @@ import Cart from "./Cart";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector(selectUser);
+  const { token, role } = useSelector(selectUser);
   const navigateTo = useNavigate();
 
   const handleLogout = () => {
@@ -37,7 +37,7 @@ const Navbar = () => {
         <SearchInputWrapper />
 
         <div className="flex gap-2 items-center">
-          {token && (
+          {token && role === "user" && (
             <div className="flex gap-2">
               <Link
                 to="/booking"
@@ -51,7 +51,7 @@ const Navbar = () => {
               </button>
             </div>
           )}
-          {!token && (
+          {!(token && role === "user") && (
             <div className="flex gap-2">
               <Link
                 to="/signin"

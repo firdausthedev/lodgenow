@@ -34,7 +34,20 @@ export const getAllPaymentsAdmin = async (
   try {
     const payments = await prisma.payment.findMany({
       include: {
-        booking: true,
+        booking: {
+          select: {
+            property: {
+              select: {
+                name: true,
+              },
+            },
+            user: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        },
       },
     });
 
