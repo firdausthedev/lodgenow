@@ -1,17 +1,11 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Homepage from "./pages/client/Homepage";
 import Signin from "./pages/client/Signin";
 import Register from "./pages/client/Register";
 import PropertyPage from "./pages/client/Property/Property";
-import Navbar from "./components/layout/Navbar";
 import BookingPage from "./pages/client/Booking/Booking";
 import PaymentPage from "./pages/client/Payment/Payment";
 import AdminLayout from "./components/Admin/AdminLayout";
@@ -28,29 +22,28 @@ import PropertyAddForm from "./pages/admin/Property/PropertyAddForm";
 import PropertyEditForm from "./pages/admin/Property/PropertyEditForm";
 import AgentAddForm from "./pages/admin/Agent/AgentAddForm";
 import AgentEditForm from "./pages/admin/Agent/AgentEditForm";
+import ClientLayout from "./components/layout/ClientLayout";
 
 const App = () => {
-  const NavbarWrapper = () => {
-    const location = useLocation();
-    const hiddenNavbarPaths = ["/signin", "/register"];
-    const isNavbarHidden =
-      hiddenNavbarPaths.includes(location.pathname) ||
-      location.pathname.startsWith("/admin");
-
-    return !isNavbarHidden && <Navbar />;
-  };
-
   return (
     <Provider store={store}>
       <Router>
-        <NavbarWrapper />
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/property/:id" element={<PropertyPage />} />
-          <Route path="/booking" element={<BookingPage />} />
-          <Route path="/cart" element={<PaymentPage />} />
+          <Route
+            path="/*"
+            element={
+              <ClientLayout>
+                <Routes>
+                  <Route path="/" element={<Homepage />} />
+                  <Route path="/signin" element={<Signin />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/property/:id" element={<PropertyPage />} />
+                  <Route path="/booking" element={<BookingPage />} />
+                  <Route path="/cart" element={<PaymentPage />} />
+                </Routes>
+              </ClientLayout>
+            }
+          />
           <Route
             path="/admin/*"
             element={

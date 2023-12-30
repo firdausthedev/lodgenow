@@ -70,7 +70,7 @@ const PaymentPage = () => {
           );
           const amount = booking.property.price * numberOfNights;
 
-          const result = await createPayment({
+          await createPayment({
             token,
             bookingId: booking.id,
             amount,
@@ -189,7 +189,7 @@ const PaymentPage = () => {
   };
 
   return (
-    <main className="bg-brown-200 h-[90vh]">
+    <main className="bg-brown-200 min-h-screen">
       <div className="container mx-auto py-12 grid grid-cols-12 gap-5">
         <div className="bg-white rounded-lg col-span-8 h-fit py-10 px-5">
           <h1 className="font-primary text-4xl font-semibold text-center">

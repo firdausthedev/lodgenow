@@ -49,6 +49,9 @@ const PropertyAddForm = () => {
     agentId: "",
   });
 
+  const { name, location, price, bedrooms, bathrooms, photos, type, agentId } =
+    values;
+
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -56,24 +59,14 @@ const PropertyAddForm = () => {
     setSucessMsg("");
 
     try {
-      const name = values.name;
-      const location = values.location;
-      const price = parseFloat(values.price.toString());
-      const bedrooms = parseInt(values.bedrooms.toString());
-      const bathrooms = parseInt(values.bathrooms.toString());
-      const photos =
-        values.photos !== "" ? values.photos.toString().split(",") : null;
-      const type = values.type;
-      const agentId = values.agentId;
-
       const result = await createProperty({
         token,
         name,
         location,
-        price,
-        bedrooms,
-        bathrooms,
-        photos,
+        price: parseFloat(price.toString()),
+        bedrooms: parseInt(bedrooms.toString()),
+        bathrooms: parseInt(bathrooms.toString()),
+        photos: photos !== "" ? photos.toString().split(",") : null,
         type,
         agentId,
       });

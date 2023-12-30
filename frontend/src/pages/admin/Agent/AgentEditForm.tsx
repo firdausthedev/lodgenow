@@ -61,6 +61,8 @@ const AgentEditForm = () => {
     }
   }, [status, agent, setValues]);
 
+  const { name, email, photo } = values;
+
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -68,10 +70,6 @@ const AgentEditForm = () => {
     setSucessMsg("");
 
     try {
-      const name = values.name;
-      const email = values.email;
-      const photo = values.photo;
-
       const result = await updateAgent({
         token,
         id,
