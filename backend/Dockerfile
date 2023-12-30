@@ -12,16 +12,12 @@ COPY .env ./
 
 COPY tsconfig.json ./
 
-COPY wait-for-postgres.sh wait-for-postgres.sh
-RUN chmod +x wait-for-postgres.sh
-
 RUN npm install
-RUN npx prisma generate
 
 COPY . .
 
 EXPOSE 3000
 EXPOSE 5555
 
-CMD ["sh", "-c", "./wait-for-postgres.sh postgres && npx prisma migrate dev && npm run dev"]
+CMD ["npm", "run", "dev"]
 

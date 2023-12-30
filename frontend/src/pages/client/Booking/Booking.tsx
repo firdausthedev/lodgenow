@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGetAllBookingQuery } from "../../../store/api/bookingApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/userSlice";
@@ -14,12 +14,7 @@ const BookingPage = () => {
     error,
     isLoading,
     isError,
-    refetch,
-  } = useGetAllBookingQuery(token);
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+  } = useGetAllBookingQuery(token, { refetchOnMountOrArgChange: true });
 
   if (isLoading) {
     return (

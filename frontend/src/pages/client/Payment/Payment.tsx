@@ -19,7 +19,7 @@ const PaymentPage = () => {
     isError,
     error,
     refetch,
-  } = useGetAllBookingQuery(token);
+  } = useGetAllBookingQuery(token, { refetchOnMountOrArgChange: true });
 
   if (isLoading) {
     return (

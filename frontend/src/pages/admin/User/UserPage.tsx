@@ -32,7 +32,7 @@ const UserPageAdmin = () => {
   return (
     <main className="bg-brown-200 min-h-screen py-12 px-10">
       <div className="bg-white rounded-lg p-5">
-        <h1 className="text-xl font-medium uppercase">Payment List</h1>
+        <h1 className="text-xl font-medium uppercase">User List</h1>
         <table className="min-w-full text-left rtl:text-right mt-6">
           <thead className="text-base text-gray-700 uppercase bg-gray-50 font-primary">
             <TableHeader headers={["#", "USER"]} />
