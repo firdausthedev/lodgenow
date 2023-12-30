@@ -4,24 +4,24 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const ClientLayout = ({ children }) => {
-  const hiddenNavbarPaths = ["/signin", "/register"];
+  const hiddenWrapperPaths = ["/signin", "/register"];
 
-  const NavbarWrapper = () => {
+  const Wrapper = ({
+    component: Component,
+    hiddenPaths,
+  }: {
+    component: React.ElementType;
+    hiddenPaths: string[];
+  }) => {
     const location = useLocation();
-    const isNavbarHidden = hiddenNavbarPaths.includes(location.pathname);
-    return !isNavbarHidden && <Navbar />;
-  };
-
-  const FooterWrapper = () => {
-    const location = useLocation();
-    const isNavbarHidden = hiddenNavbarPaths.includes(location.pathname);
-    return !isNavbarHidden && <Footer />;
+    const isHidden = hiddenPaths.includes(location.pathname);
+    return !isHidden && <Component />;
   };
   return (
     <>
-      <NavbarWrapper />
+      <Wrapper component={Navbar} hiddenPaths={hiddenWrapperPaths} />
       <div className="min-h-screen">{children}</div>
-      <FooterWrapper />
+      <Wrapper component={Footer} hiddenPaths={hiddenWrapperPaths} />
     </>
   );
 };
