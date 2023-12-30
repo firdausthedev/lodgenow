@@ -3,23 +3,23 @@ import React, { useState } from "react";
 import { Booking } from "../../store/types";
 import BookingModal from "./BookingModal";
 
-const BookingList = ({ bookings }: { bookings: Booking[] }) => {
-  const BookingButton = ({ bookingId }: { bookingId: string }) => {
-    const [isModal, setIsModal] = useState(false);
-    return (
-      <>
-        <button
-          className="bg-accent-200 text-sm text-white rounded-md px-4 py-1"
-          onClick={() => setIsModal(true)}>
-          View
-        </button>
-        {isModal && (
-          <BookingModal bookingId={bookingId} setIsModal={setIsModal} />
-        )}
-      </>
-    );
-  };
+const BookingButton = ({ bookingId }: { bookingId: string }) => {
+  const [isModal, setIsModal] = useState(false);
+  return (
+    <>
+      <button
+        className="bg-accent-200 text-sm text-white rounded-md px-4 py-1"
+        onClick={() => setIsModal(true)}>
+        View
+      </button>
+      {isModal && (
+        <BookingModal bookingId={bookingId} setIsModal={setIsModal} />
+      )}
+    </>
+  );
+};
 
+const BookingList = ({ bookings }: { bookings: Booking[] }) => {
   const bookingWithPayment = bookings.filter(
     booking => booking.payment !== null,
   );

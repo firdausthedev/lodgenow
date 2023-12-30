@@ -4,6 +4,16 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/slices/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
+const AdminNavItem = ({ to, title }) => {
+  return (
+    <Link
+      to={to}
+      className="font-medium text-lg font-secondary p-3 bg-brown-200 rounded-lg text-gray-600">
+      {title}
+    </Link>
+  );
+};
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
@@ -11,16 +21,6 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigateTo("/admin");
-  };
-
-  const AdminNavItem = ({ to, title }) => {
-    return (
-      <Link
-        to={to}
-        className="font-medium text-lg font-secondary p-3 bg-brown-200 rounded-lg text-gray-600">
-        {title}
-      </Link>
-    );
   };
 
   return (

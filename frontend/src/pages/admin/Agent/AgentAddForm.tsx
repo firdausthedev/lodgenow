@@ -68,7 +68,6 @@ const AgentAddForm = () => {
           }
         }
       }
-      console.log(result);
       if ("data" in result) {
         setSucessMsg("agent added successfully");
       }

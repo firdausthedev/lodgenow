@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import Spinner from "../../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "../../../components/utils/constants";
 import { useGetAllBookingAdminQuery } from "../../../store/api/adminApi";
-import { getAllBookingAdminData } from "../../../store/api/adminApi";
-import { convertDateToString } from "../../../components/utils/booking";
+import {
+  ItemListBooking as ItemList,
+  TableHeader,
+} from "../../../components/Admin/ItemList";
 
 const BookingPageAdmin = () => {
   const { token } = useSelector(selectUser);
@@ -27,22 +29,6 @@ const BookingPageAdmin = () => {
     );
   }
 
-  const ItemList = ({ items }: { items: getAllBookingAdminData[] }) => {
-    return items.map((item, index) => {
-      const checkIn = convertDateToString(item.checkIn);
-      const checkOut = convertDateToString(item.checkOut);
-      return (
-        <tr key={item.id} className="odd:bg-white even:bg-gray-50 border-b">
-          <td className="px-6 py-4">{index + 1}</td>
-          <td className="px-6 py-4">{checkIn}</td>
-          <td className="px-6 py-4">{checkOut}</td>
-          <td className="px-6 py-4">{item.property.name}</td>
-          <td className="px-6 py-4">{item.user.username}</td>
-        </tr>
-      );
-    });
-  };
-
   return (
     <main className="bg-brown-200 min-h-screen py-12 px-10">
       <div className="bg-white rounded-lg p-5">
@@ -50,23 +36,9 @@ const BookingPageAdmin = () => {
 
         <table className="min-w-full text-left rtl:text-right mt-6">
           <thead className="text-base text-gray-700 uppercase bg-gray-50 font-primary">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                #
-              </th>
-              <th scope="col" className="px-6 py-3">
-                CHECKIN
-              </th>
-              <th scope="col" className="px-6 py-3">
-                CHECKOUT
-              </th>
-              <th scope="col" className="px-6 py-3">
-                PROPERTY
-              </th>
-              <th scope="col" className="px-6 py-3">
-                USER
-              </th>
-            </tr>
+            <TableHeader
+              headers={["#", "CHECKIN", "CHECKOUT", "PROPERTY", "USER"]}
+            />
           </thead>
           <tbody className="font-secondary">
             <ItemList items={data} />

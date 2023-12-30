@@ -6,6 +6,14 @@ import { logout, selectUser } from "../../store/slices/userSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cart from "./Cart";
 
+const SearchInputWrapper = () => {
+  const location = useLocation();
+  const showSearchInputPaths = ["/"];
+  const isSearchInputShow = showSearchInputPaths.includes(location.pathname);
+
+  return isSearchInputShow && <SearchInput />;
+};
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const { token, role } = useSelector(selectUser);
@@ -14,14 +22,6 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigateTo("/");
-  };
-
-  const SearchInputWrapper = () => {
-    const location = useLocation();
-    const showSearchInputPaths = ["/"];
-    const isSearchInputShow = showSearchInputPaths.includes(location.pathname);
-
-    return isSearchInputShow && <SearchInput />;
   };
 
   return (

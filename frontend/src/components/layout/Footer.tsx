@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="py-5 border-t">
+    <footer className="py-10 border-t">
       <div className="container  flex justify-between items-center">
         <p>
           A mock website made with ☕ by{" "}
@@ -17,7 +17,7 @@ const Footer = () => {
         </p>
         <Link
           to="/"
-          className="font-semibold text-2xl font-secondary p-5 text-accent">
+          className="font-semibold text-2xl font-secondary text-accent">
           lodgenow
         </Link>
       </div>

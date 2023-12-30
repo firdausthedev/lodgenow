@@ -2,6 +2,14 @@ import React from "react";
 import { Review } from "./../../store/types";
 import { FaStar } from "react-icons/fa6";
 
+const StarRating = ({ numberOfStars }) => {
+  const stars = Array.from({ length: numberOfStars }, (_, index) => (
+    <FaStar key={index} className="text-xs" />
+  ));
+
+  return <div className="flex">{stars}</div>;
+};
+
 const ReviewCard = ({ review }: { review: Review }) => {
   const usernFirstChar = review.user.username.charAt(0);
   const cardBgColor = [
@@ -13,14 +21,6 @@ const ReviewCard = ({ review }: { review: Review }) => {
     "bg-pink-500",
   ];
   const randomColorIndex = Math.floor(Math.random() * cardBgColor.length);
-
-  const StarRating = ({ numberOfStars }) => {
-    const stars = Array.from({ length: numberOfStars }, (_, index) => (
-      <FaStar key={index} className="text-xs" />
-    ));
-
-    return <div className="flex">{stars}</div>;
-  };
 
   return (
     <div className="flex flex-col gap-4">

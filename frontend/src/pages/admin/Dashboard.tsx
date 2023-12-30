@@ -13,6 +13,20 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "../../components/utils/constants";
 
+const DashboardItem = ({ icon, title, length, to }) => {
+  return (
+    <Link
+      to={`../${to}`}
+      className="p-5 bg-white rounded-lg text-2xl flex justify-between shadow-sm">
+      <div className="flex items-center gap-3">
+        {icon}
+        {title}
+      </div>
+      <p>{length}</p>
+    </Link>
+  );
+};
+
 const Dashboard = () => {
   const { token } = useSelector(selectUser);
   const { data, isLoading, isError } = useGetDashboardQuery(token, {
@@ -34,20 +48,6 @@ const Dashboard = () => {
       </main>
     );
   }
-
-  const DashboardItem = ({ icon, title, length, to }) => {
-    return (
-      <Link
-        to={`../${to}`}
-        className="p-5 bg-white rounded-lg text-2xl flex justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          {icon}
-          {title}
-        </div>
-        <p>{length}</p>
-      </Link>
-    );
-  };
 
   return (
     <main className="bg-brown-200 min-h-screen py-12 px-10">

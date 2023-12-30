@@ -3,20 +3,21 @@ import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+const Wrapper = ({
+  component: Component,
+  hiddenPaths,
+}: {
+  component: React.ElementType;
+  hiddenPaths: string[];
+}) => {
+  const location = useLocation();
+  const isHidden = hiddenPaths.includes(location.pathname);
+  return !isHidden && <Component />;
+};
+
 const ClientLayout = ({ children }) => {
   const hiddenWrapperPaths = ["/signin", "/register"];
 
-  const Wrapper = ({
-    component: Component,
-    hiddenPaths,
-  }: {
-    component: React.ElementType;
-    hiddenPaths: string[];
-  }) => {
-    const location = useLocation();
-    const isHidden = hiddenPaths.includes(location.pathname);
-    return !isHidden && <Component />;
-  };
   return (
     <>
       <Wrapper component={Navbar} hiddenPaths={hiddenWrapperPaths} />

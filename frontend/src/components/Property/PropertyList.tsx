@@ -15,6 +15,16 @@ interface PropertyListProps {
   searchResult: Property[];
 }
 
+const LoadingPanel = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="h-80 bg-loadingGray animate-pulse rounded-lg"></div>
+      <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
+      <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
+    </div>
+  );
+};
+
 const PropertyList = ({
   data,
   isLoading,
@@ -25,16 +35,6 @@ const PropertyList = ({
   const searchTerm = useSelector(selectSearchTerm);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-  };
-
-  const LoadingPanel = () => {
-    return (
-      <div className="flex flex-col gap-2">
-        <div className="h-80 bg-loadingGray animate-pulse rounded-lg"></div>
-        <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/2 "></div>
-        <div className="h-3 bg-loadingGray animate-pulse rounded-md w-1/5 "></div>
-      </div>
-    );
   };
 
   if (isLoading) {

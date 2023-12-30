@@ -3,10 +3,11 @@ import { selectUser } from "../../../store/slices/userSlice";
 import { useSelector } from "react-redux";
 import Spinner from "../../../components/layout/Spinner";
 import { SERVER_ERROR_MSG } from "../../../components/utils/constants";
+import { useGetAllPaymentAdminQuery } from "../../../store/api/adminApi";
 import {
-  getAllPaymentAdmin,
-  useGetAllPaymentAdminQuery,
-} from "../../../store/api/adminApi";
+  ItemListPayment as ItemList,
+  TableHeader,
+} from "../../../components/Admin/ItemList";
 
 const PaymentPageAdmin = () => {
   const { token } = useSelector(selectUser);
@@ -28,43 +29,15 @@ const PaymentPageAdmin = () => {
     );
   }
 
-  const ItemList = ({ items }: { items: getAllPaymentAdmin[] }) => {
-    return items.map((item, index) => {
-      return (
-        <tr key={item.id} className="odd:bg-white even:bg-gray-50 border-b">
-          <td className="px-6 py-4">{index + 1}</td>
-          <td className="px-6 py-4">{item.booking.property.name}</td>
-          <td className="px-6 py-4">{item.booking.user.username}</td>
-          <td className="px-6 py-4">{item.amount}</td>
-          <td className="px-6 py-4">{item.status}</td>
-        </tr>
-      );
-    });
-  };
-
   return (
     <main className="bg-brown-200 min-h-screen py-12 px-10">
       <div className="bg-white rounded-lg p-5">
         <h1 className="text-xl font-medium uppercase">Payment List</h1>
         <table className="min-w-full text-left rtl:text-right mt-6">
           <thead className="text-base text-gray-700 uppercase bg-gray-50 font-primary">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                #
-              </th>
-              <th scope="col" className="px-6 py-3">
-                PROPERTY
-              </th>
-              <th scope="col" className="px-6 py-3">
-                USER
-              </th>
-              <th scope="col" className="px-6 py-3">
-                AMOUNT
-              </th>
-              <th scope="col" className="px-6 py-3">
-                STATUS
-              </th>
-            </tr>
+            <TableHeader
+              headers={["#", "PROPERTY", "USER", "AMOUNT", "STATUS"]}
+            />
           </thead>
           <tbody className="font-secondary">
             <ItemList items={data} />
